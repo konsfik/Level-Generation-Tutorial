@@ -1,10 +1,11 @@
+package Core;
 
-public class Vector_2i implements Cloneable
+public class Coords implements Cloneable
 {
 	public int x;
 	public int y;
 
-	public Vector_2i(
+	public Coords(
 			int x,
 			int y)
 	{
@@ -12,24 +13,24 @@ public class Vector_2i implements Cloneable
 		this.y = y;
 	}
 
-	public Vector_2i Up()
+	public Coords Up()
 	{
-		return new Vector_2i(x, y + 1);
+		return new Coords(x, y + 1);
 	}
 
-	public Vector_2i Down()
+	public Coords Down()
 	{
-		return new Vector_2i(x, y - 1);
+		return new Coords(x, y - 1);
 	}
 
-	public Vector_2i Left()
+	public Coords Left()
 	{
-		return new Vector_2i(x - 1, y);
+		return new Coords(x - 1, y);
 	}
 
-	public Vector_2i Right()
+	public Coords Right()
 	{
-		return new Vector_2i(x + 1, y);
+		return new Coords(x + 1, y);
 	}
 
 	// Overriding equals() to compare two Vector_2i objects
@@ -47,13 +48,13 @@ public class Vector_2i implements Cloneable
 		 * Check if o is an instance of Vector_2i or not.
 		 * "null instanceof [type]" also returns false
 		 */
-		if (other instanceof Vector_2i == false)
+		if (other instanceof Coords == false)
 		{
 			return false;
 		}
 
 		// typecast other to Vector_2i so that we can compare data members
-		Vector_2i other_vector = (Vector_2i) other;
+		Coords other_vector = (Coords) other;
 
 		// Compare the data members and return accordingly
 		return 
@@ -76,7 +77,7 @@ public class Vector_2i implements Cloneable
 	 * 
 	 * @param vector_to_copy
 	 */
-	private Vector_2i(Vector_2i vector_to_copy)
+	private Coords(Coords vector_to_copy)
 	{
 		this.x = vector_to_copy.x;
 		this.y = vector_to_copy.y;
@@ -88,6 +89,6 @@ public class Vector_2i implements Cloneable
 	@Override
 	public Object clone()
 	{
-		return new Vector_2i(this);
+		return new Coords(this);
 	}
 }

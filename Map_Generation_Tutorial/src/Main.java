@@ -1,14 +1,17 @@
 import java.util.ArrayList;
 
+import Core.*;
+import GA.*;
+
 public class Main
 {
 	public static void main(String[] args)
 	{
-		Level_State map = new Level_State(
+		Level map = new Level(
 				10,
 				10,
-				new Vector_2i(0, 0),
-				new Vector_2i(9, 9));
+				new Coords(0, 0),
+				new Coords(9, 9));
 
 		for (int i = 0; i < 10; i++)
 		{
@@ -26,7 +29,7 @@ public class Main
 			}
 		}
 		
-		ArrayList<Vector_2i> path = Level_Utilities.Shortest_Path__BFS(
+		ArrayList<Coords> path = Level_Utilities.Shortest_Path__BFS(
 				map, 
 				map.entrance, 
 				map.exit

@@ -1,3 +1,4 @@
+package Core;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -12,17 +13,17 @@ public class Level_Utilities
 	 * @return
 	 */
 	public static int Manhattan_Distance(
-			Vector_2i p1,
-			Vector_2i p2)
+			Coords p1,
+			Coords p2)
 	{
 		int manhattan_distance = Math.abs(p1.x - p2.x) + Math.abs(p1.y - p2.y);
 		return manhattan_distance;
 	}
 
 	public static int Distance_Between_Cells(
-			Level_State map,
-			Vector_2i cell_1,
-			Vector_2i cell_2)
+			Level map,
+			Coords cell_1,
+			Coords cell_2)
 	{
 
 		return 0;
@@ -41,9 +42,9 @@ public class Level_Utilities
 	 * @return
 	 */
 	public static boolean Cells_Reachable(
-			Level_State level,
-			Vector_2i root,
-			Vector_2i destination)
+			Level level,
+			Coords root,
+			Coords destination)
 	{
 
 		if (level.Q__Is_Cell__Floor(root) == false)
@@ -55,8 +56,8 @@ public class Level_Utilities
 			return false;
 		}
 
-		ArrayList<Vector_2i> visited_cells = new ArrayList<Vector_2i>();
-		ArrayList<Vector_2i> search_queue = new ArrayList<Vector_2i>();
+		ArrayList<Coords> visited_cells = new ArrayList<Coords>();
+		ArrayList<Coords> search_queue = new ArrayList<Coords>();
 
 		search_queue.add(root);
 		visited_cells.add(root);
@@ -69,12 +70,12 @@ public class Level_Utilities
 			 * Remove the first element of the search queue. I.e. the one that was first
 			 * inserted to it. And use it as the current cell.
 			 */
-			Vector_2i current = search_queue.remove(0);
-			ArrayList<Vector_2i> neighbors = level.Q__Cell__Neighbors(current);
+			Coords current = search_queue.remove(0);
+			ArrayList<Coords> neighbors = level.Q__Cell__Neighbors(current);
 
 			// find the unvisited neighbors...
-			ArrayList<Vector_2i> unvisited_neighbors = new ArrayList<Vector_2i>();
-			for (Vector_2i neighbor : neighbors)
+			ArrayList<Coords> unvisited_neighbors = new ArrayList<Coords>();
+			for (Coords neighbor : neighbors)
 			{
 				if (visited_cells.contains(neighbor) == false)
 				{
@@ -82,7 +83,7 @@ public class Level_Utilities
 				}
 			}
 
-			for (Vector_2i neighbor : unvisited_neighbors)
+			for (Coords neighbor : unvisited_neighbors)
 			{
 				if (neighbor.equals(destination))
 				{
@@ -115,33 +116,33 @@ public class Level_Utilities
 	 * @param destination
 	 * @return
 	 */
-	public static ArrayList<Vector_2i> Shortest_Path__BFS(
-			Level_State level,
-			Vector_2i root,
-			Vector_2i destination)
+	public static ArrayList<Coords> Shortest_Path__BFS(
+			Level level,
+			Coords root,
+			Coords destination)
 	{
 
 		if (root.equals(destination))
 		{
-			ArrayList<Vector_2i> short_path = new ArrayList<Vector_2i>();
+			ArrayList<Coords> short_path = new ArrayList<Coords>();
 			short_path.add(root);
 			return short_path;
 		}
 		if (level.Q__Is_Cell__Floor(root) == false)
 		{
-			return new ArrayList<Vector_2i>();
+			return new ArrayList<Coords>();
 		}
 		if (level.Q__Is_Cell__Floor(destination) == false)
 		{
-			return new ArrayList<Vector_2i>();
+			return new ArrayList<Coords>();
 		}
 
-		ArrayList<Vector_2i> visited_cells = new ArrayList<Vector_2i>();
-		ArrayList<Vector_2i> search_queue = new ArrayList<Vector_2i>();
+		ArrayList<Coords> visited_cells = new ArrayList<Coords>();
+		ArrayList<Coords> search_queue = new ArrayList<Coords>();
 
-		HashMap<Vector_2i, Vector_2i> predecessors = new HashMap<Vector_2i, Vector_2i>();
-		ArrayList<Vector_2i> floor_cells = level.Q__Floor_Cells();
-		for (Vector_2i floor_cell : floor_cells)
+		HashMap<Coords, Coords> predecessors = new HashMap<Coords, Coords>();
+		ArrayList<Coords> floor_cells = level.Q__Floor_Cells();
+		for (Coords floor_cell : floor_cells)
 		{
 			predecessors.put(floor_cell, floor_cell);
 		}
@@ -156,12 +157,12 @@ public class Level_Utilities
 			 * Remove the first element of the search queue. I.e. the one that was first
 			 * inserted to it. And use it as the current cell.
 			 */
-			Vector_2i current = search_queue.remove(0);
-			ArrayList<Vector_2i> neighbors = level.Q__Cell__Neighbors(current);
+			Coords current = search_queue.remove(0);
+			ArrayList<Coords> neighbors = level.Q__Cell__Neighbors(current);
 
 			// find the unvisited neighbors...
-			ArrayList<Vector_2i> unvisited_neighbors = new ArrayList<Vector_2i>();
-			for (Vector_2i neighbor : neighbors)
+			ArrayList<Coords> unvisited_neighbors = new ArrayList<Coords>();
+			for (Coords neighbor : neighbors)
 			{
 				if (visited_cells.contains(neighbor) == false)
 				{
@@ -172,7 +173,7 @@ public class Level_Utilities
 			Collections.shuffle(unvisited_neighbors);
 
 			// process all unvisited neighbors
-			for (Vector_2i neighbor : unvisited_neighbors)
+			for (Coords neighbor : unvisited_neighbors)
 			{
 				search_queue.add(neighbor);
 				visited_cells.add(neighbor);
@@ -187,20 +188,20 @@ public class Level_Utilities
 
 		if (found_destination == false)
 		{
-			return new ArrayList<Vector_2i>();
+			return new ArrayList<Coords>();
 		}
 		else
 		{
-			ArrayList<Vector_2i> shortestPath = new ArrayList<Vector_2i>();
+			ArrayList<Coords> shortestPath = new ArrayList<Coords>();
 
 			boolean pathFinished = false;
 			// start from the destination and gradually move towards the root,
 			// by following the predecessors' dictionary
-			Vector_2i current = destination;
+			Coords current = destination;
 			shortestPath.add(current);
 			while (pathFinished == false)
 			{
-				Vector_2i predecessor = predecessors.get(current);
+				Coords predecessor = predecessors.get(current);
 				if (predecessor.equals(current) == false)
 				{
 					shortestPath.add(predecessor);
@@ -222,7 +223,7 @@ public class Level_Utilities
 			}
 			else
 			{
-				return new ArrayList<Vector_2i>();
+				return new ArrayList<Coords>();
 			}
 
 		}

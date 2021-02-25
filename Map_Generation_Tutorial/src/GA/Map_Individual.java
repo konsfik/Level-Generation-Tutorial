@@ -1,7 +1,10 @@
+package GA;
+
+import Core.*;
 
 public class Map_Individual
 {
-	public Level_State map_state;
+	public Level map_state;
 	
 	public double fitness;
 	
