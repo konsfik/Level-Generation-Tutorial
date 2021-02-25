@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
-public class Map_Utilities
+public class Level_Utilities
 {
 	/**
 	 * Returns the manhattan distance between two vectors.
@@ -20,7 +20,7 @@ public class Map_Utilities
 	}
 
 	public static int Distance_Between_Cells(
-			Map_State map,
+			Level_State map,
 			Vector_2i cell_1,
 			Vector_2i cell_2)
 	{
@@ -35,22 +35,22 @@ public class Map_Utilities
 	 * search, it means that cell_2 is not reachable from cell_2 and the method
 	 * returns false.
 	 * 
-	 * @param map
+	 * @param level
 	 * @param cell_1
 	 * @param cell_2
 	 * @return
 	 */
 	public static boolean Cells_Reachable(
-			Map_State map,
+			Level_State level,
 			Vector_2i root,
 			Vector_2i destination)
 	{
 
-		if (map.Q__Is_Cell__Floor(root) == false)
+		if (level.Q__Is_Cell__Floor(root) == false)
 		{
 			return false;
 		}
-		if (map.Q__Is_Cell__Floor(destination) == false)
+		if (level.Q__Is_Cell__Floor(destination) == false)
 		{
 			return false;
 		}
@@ -70,7 +70,7 @@ public class Map_Utilities
 			 * inserted to it. And use it as the current cell.
 			 */
 			Vector_2i current = search_queue.remove(0);
-			ArrayList<Vector_2i> neighbors = map.Q__Cell__Neighbors(current);
+			ArrayList<Vector_2i> neighbors = level.Q__Cell__Neighbors(current);
 
 			// find the unvisited neighbors...
 			ArrayList<Vector_2i> unvisited_neighbors = new ArrayList<Vector_2i>();
@@ -110,13 +110,13 @@ public class Map_Utilities
 	 * Finds and returns the shortest path between a root and a destination cell of a map.
 	 * Both the root and the destination need to be of type "floor", otherwise an empty list will be returned.
 	 * 
-	 * @param map
+	 * @param level
 	 * @param root
 	 * @param destination
 	 * @return
 	 */
 	public static ArrayList<Vector_2i> Shortest_Path__BFS(
-			Map_State map,
+			Level_State level,
 			Vector_2i root,
 			Vector_2i destination)
 	{
@@ -127,11 +127,11 @@ public class Map_Utilities
 			short_path.add(root);
 			return short_path;
 		}
-		if (map.Q__Is_Cell__Floor(root) == false)
+		if (level.Q__Is_Cell__Floor(root) == false)
 		{
 			return new ArrayList<Vector_2i>();
 		}
-		if (map.Q__Is_Cell__Floor(destination) == false)
+		if (level.Q__Is_Cell__Floor(destination) == false)
 		{
 			return new ArrayList<Vector_2i>();
 		}
@@ -140,7 +140,7 @@ public class Map_Utilities
 		ArrayList<Vector_2i> search_queue = new ArrayList<Vector_2i>();
 
 		HashMap<Vector_2i, Vector_2i> predecessors = new HashMap<Vector_2i, Vector_2i>();
-		ArrayList<Vector_2i> floor_cells = map.Q__Floor_Cells();
+		ArrayList<Vector_2i> floor_cells = level.Q__Floor_Cells();
 		for (Vector_2i floor_cell : floor_cells)
 		{
 			predecessors.put(floor_cell, floor_cell);
@@ -157,7 +157,7 @@ public class Map_Utilities
 			 * inserted to it. And use it as the current cell.
 			 */
 			Vector_2i current = search_queue.remove(0);
-			ArrayList<Vector_2i> neighbors = map.Q__Cell__Neighbors(current);
+			ArrayList<Vector_2i> neighbors = level.Q__Cell__Neighbors(current);
 
 			// find the unvisited neighbors...
 			ArrayList<Vector_2i> unvisited_neighbors = new ArrayList<Vector_2i>();

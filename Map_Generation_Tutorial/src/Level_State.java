@@ -1,12 +1,12 @@
 import java.util.ArrayList;
 
-public class Map_State implements Cloneable
+public class Level_State implements Cloneable
 {
 	public int[][] cells;
 	public Vector_2i entrance;
 	public Vector_2i exit;
 
-	public Map_State(
+	public Level_State(
 			int width,
 			int height,
 			Vector_2i entrance,
@@ -216,7 +216,7 @@ public class Map_State implements Cloneable
 	 * 
 	 * @param map_to_copy
 	 */
-	private Map_State(Map_State map_to_copy)
+	private Level_State(Level_State map_to_copy)
 	{
 		entrance = (Vector_2i) map_to_copy.entrance.clone();
 		exit = (Vector_2i) map_to_copy.exit.clone();
@@ -239,6 +239,6 @@ public class Map_State implements Cloneable
 	@Override
 	public Object clone()
 	{
-		return new Map_State(this);
+		return new Level_State(this);
 	}
 }

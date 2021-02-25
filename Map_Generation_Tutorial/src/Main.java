@@ -4,7 +4,7 @@ public class Main
 {
 	public static void main(String[] args)
 	{
-		Map_State map = new Map_State(
+		Level_State map = new Level_State(
 				10,
 				10,
 				new Vector_2i(0, 0),
@@ -26,7 +26,7 @@ public class Main
 			}
 		}
 		
-		ArrayList<Vector_2i> path = Map_Utilities.Shortest_Path__BFS(
+		ArrayList<Vector_2i> path = Level_Utilities.Shortest_Path__BFS(
 				map, 
 				map.entrance, 
 				map.exit
@@ -34,7 +34,7 @@ public class Main
 		
 		System.out.print(path.size());
 		
-		boolean ok = Map_Utilities.Cells_Reachable(map, map.entrance, map.exit);
+		boolean ok = Level_Utilities.Cells_Reachable(map, map.entrance, map.exit);
 
 		if (ok)
 		{
