@@ -73,7 +73,7 @@ public class Coords implements Cloneable
     }
 
 	/**
-	 * Private constructor, for deep copy purposes only.
+	 * Private constructor, to be used by the clone() method.
 	 * 
 	 * @param vector_to_copy
 	 */

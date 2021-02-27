@@ -1,4 +1,9 @@
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
+import javax.swing.JPanel;
 
 import Core.*;
 import GA.*;
@@ -37,7 +42,7 @@ public class Main
 		
 		System.out.print(path.size());
 		
-		boolean ok = Level_Utilities.Cells_Reachable(map, map.entrance, map.exit);
+		boolean ok = Level_Utilities.Path_Exists(map, map.entrance, map.exit);
 
 		if (ok)
 		{
@@ -47,6 +52,15 @@ public class Main
 		{
 			System.out.print("no");
 		}
+		
+		BufferedImage img = new BufferedImage(500, 400, BufferedImage.TYPE_3BYTE_BGR);
+		
+		Graphics2D gr = img.createGraphics();
+		
+//		gr.drawLine(x1, y1, x2, y2);
+		gr.dispose();
+		
+		
 
 	}
 }

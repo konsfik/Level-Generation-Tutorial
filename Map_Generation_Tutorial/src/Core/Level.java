@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Level implements Cloneable
 {
-	public int[][] cells;
+	public char[][] cells;
 	public Coords entrance;
 	public Coords exit;
 
@@ -15,7 +15,7 @@ public class Level implements Cloneable
 			Coords exit)
 	{
 		// initialize the cells 2d array
-		cells = new int[width][height];
+		cells = new char[width][height];
 
 		// set all values of the array to 0 (floor)
 		for (int x = 0; x < width; x++)
@@ -33,22 +33,22 @@ public class Level implements Cloneable
 
 	public void Ï__Set_Cell__Wall(Coords coords)
 	{
-		cells[coords.x][coords.y] = 1;
+		cells[coords.x][coords.y] = 'w';
 	}
 
 	public void Ï__Set_Cell__Wall(int x, int y)
 	{
-		cells[x][y] = 1;
+		cells[x][y] = 'w';
 	}
 
 	public void Ï__Set_Cell__Floor(Coords coords)
 	{
-		cells[coords.x][coords.y] = 0;
+		cells[coords.x][coords.y] = 'f';
 	}
 
 	public void Ï__Set_Cell__Floor(int x, int y)
 	{
-		cells[x][y] = 0;
+		cells[x][y] = 'f';
 	}
 
 	public int Q__Map_Width()
@@ -68,7 +68,7 @@ public class Level implements Cloneable
 
 	public boolean Q__Is_Cell__Wall(int x, int y)
 	{
-		return cells[x][y] == 1;
+		return cells[x][y] == 'w';
 	}
 
 	public boolean Q__Is_Cell__Floor(Coords cell)
@@ -78,7 +78,7 @@ public class Level implements Cloneable
 
 	public boolean Q__Is_Cell__Floor(int x, int y)
 	{
-		return cells[x][y] == 0;
+		return cells[x][y] == 'f';
 	}
 
 	/**
@@ -162,7 +162,9 @@ public class Level implements Cloneable
 	}
 
 	/**
-	 * Returns the neighbors of a cell.
+	 * Returns the neighbors of a cell. If the cell is a wall, an empty list will be
+	 * returned. If the cell is floor, the method returns any other floor cells that
+	 * lie at its left, right, up or down.
 	 * 
 	 * @param cell
 	 * @return
@@ -171,15 +173,14 @@ public class Level implements Cloneable
 	{
 		ArrayList<Coords> cell_neighbors = new ArrayList<Coords>();
 
-		/**
-		 * If the cell is wall, then it has no neighbors. In that case, return an empty
-		 * list.
-		 */
+		// If the cell is wall, then it has no neighbors.
+		// In that case, return an empty list.
 		if (Q__Is_Cell__Wall(cell))
 		{
 			return cell_neighbors;
 		}
-
+		
+		// Otherwise, search left, right, up and down for floor cells.
 		// up
 		if (cell.y < Q__Map_Height() - 1)
 		{
@@ -224,23 +225,23 @@ public class Level implements Cloneable
 	}
 
 	/**
-	 * Private constructor, intended for use by the clone() method.
+	 * Private constructor, to be used by the clone() method.
 	 * 
-	 * @param map_to_copy
+	 * @param level_to_copy
 	 */
-	private Level(Level map_to_copy)
+	private Level(Level level_to_copy)
 	{
-		entrance = (Coords) map_to_copy.entrance.clone();
-		exit = (Coords) map_to_copy.exit.clone();
+		entrance = (Coords) level_to_copy.entrance.clone();
+		exit = (Coords) level_to_copy.exit.clone();
 
-		int width = map_to_copy.cells.length;
-		int height = map_to_copy.cells[0].length;
-		cells = new int[width][height];
+		int width = level_to_copy.cells.length;
+		int height = level_to_copy.cells[0].length;
+		cells = new char[width][height];
 		for (int x = 0; x < width; x++)
 		{
 			for (int y = 0; y < height; y++)
 			{
-				cells[x][y] = map_to_copy.cells[x][y];
+				cells[x][y] = level_to_copy.cells[x][y];
 			}
 		}
 	}

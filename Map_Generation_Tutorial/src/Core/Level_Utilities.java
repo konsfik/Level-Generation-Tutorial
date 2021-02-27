@@ -1,4 +1,5 @@
 package Core;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -41,7 +42,7 @@ public class Level_Utilities
 	 * @param cell_2
 	 * @return
 	 */
-	public static boolean Cells_Reachable(
+	public static boolean Path_Exists(
 			Level level,
 			Coords root,
 			Coords destination)
@@ -96,20 +97,14 @@ public class Level_Utilities
 
 		}
 
-		if (found_destination)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return found_destination;
 
 	}
 
 	/**
-	 * Finds and returns the shortest path between a root and a destination cell of a map.
-	 * Both the root and the destination need to be of type "floor", otherwise an empty list will be returned.
+	 * Finds and returns the shortest path between a root and a destination cell of
+	 * a map. Both the root and the destination need to be of type "floor",
+	 * otherwise an empty list will be returned.
 	 * 
 	 * @param level
 	 * @param root
@@ -139,9 +134,11 @@ public class Level_Utilities
 
 		ArrayList<Coords> visited_cells = new ArrayList<Coords>();
 		ArrayList<Coords> search_queue = new ArrayList<Coords>();
-
-		HashMap<Coords, Coords> predecessors = new HashMap<Coords, Coords>();
+		
 		ArrayList<Coords> floor_cells = level.Q__Floor_Cells();
+		
+		HashMap<Coords, Coords> predecessors = new HashMap<Coords, Coords>();
+		
 		for (Coords floor_cell : floor_cells)
 		{
 			predecessors.put(floor_cell, floor_cell);
@@ -185,7 +182,7 @@ public class Level_Utilities
 				}
 			}
 		}
-
+		
 		if (found_destination == false)
 		{
 			return new ArrayList<Coords>();
