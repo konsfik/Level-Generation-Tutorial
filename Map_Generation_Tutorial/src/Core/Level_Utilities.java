@@ -48,11 +48,11 @@ public class Level_Utilities
 			Coords destination)
 	{
 
-		if (level.Q__Is_Cell__Floor(root) == false)
+		if (level.Is_Floor(root) == false)
 		{
 			return false;
 		}
-		if (level.Q__Is_Cell__Floor(destination) == false)
+		if (level.Is_Floor(destination) == false)
 		{
 			return false;
 		}
@@ -72,7 +72,7 @@ public class Level_Utilities
 			 * inserted to it. And use it as the current cell.
 			 */
 			Coords current = search_queue.remove(0);
-			ArrayList<Coords> neighbors = level.Q__Cell__Neighbors(current);
+			ArrayList<Coords> neighbors = level.Cell_Neighbors(current);
 
 			// find the unvisited neighbors...
 			ArrayList<Coords> unvisited_neighbors = new ArrayList<Coords>();
@@ -123,11 +123,11 @@ public class Level_Utilities
 			short_path.add(root);
 			return short_path;
 		}
-		if (level.Q__Is_Cell__Floor(root) == false)
+		if (level.Is_Floor(root) == false)
 		{
 			return new ArrayList<Coords>();
 		}
-		if (level.Q__Is_Cell__Floor(destination) == false)
+		if (level.Is_Floor(destination) == false)
 		{
 			return new ArrayList<Coords>();
 		}
@@ -135,7 +135,7 @@ public class Level_Utilities
 		ArrayList<Coords> visited_cells = new ArrayList<Coords>();
 		ArrayList<Coords> search_queue = new ArrayList<Coords>();
 		
-		ArrayList<Coords> floor_cells = level.Q__Floor_Cells();
+		ArrayList<Coords> floor_cells = level.Floor_Cells__As_List();
 		
 		HashMap<Coords, Coords> predecessors = new HashMap<Coords, Coords>();
 		
@@ -155,7 +155,7 @@ public class Level_Utilities
 			 * inserted to it. And use it as the current cell.
 			 */
 			Coords current = search_queue.remove(0);
-			ArrayList<Coords> neighbors = level.Q__Cell__Neighbors(current);
+			ArrayList<Coords> neighbors = level.Cell_Neighbors(current);
 
 			// find the unvisited neighbors...
 			ArrayList<Coords> unvisited_neighbors = new ArrayList<Coords>();

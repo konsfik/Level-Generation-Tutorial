@@ -22,7 +22,7 @@ public class Level implements Cloneable
 		{
 			for (int y = 0; y < height; y++)
 			{
-				Ï__Set_Cell__Floor(x, y);
+				Set_Floor(x, y);
 			}
 		}
 
@@ -31,52 +31,94 @@ public class Level implements Cloneable
 
 	}
 
-	public void Ï__Set_Cell__Wall(Coords coords)
+	public void Set_Wall(Coords coords)
 	{
-		cells[coords.x][coords.y] = 'w';
+		Set_Wall(coords.x, coords.y);
 	}
 
-	public void Ï__Set_Cell__Wall(int x, int y)
+	public void Set_Wall(int x, int y)
 	{
 		cells[x][y] = 'w';
 	}
 
-	public void Ï__Set_Cell__Floor(Coords coords)
+	public void Set_Floor(Coords coords)
 	{
-		cells[coords.x][coords.y] = 'f';
+		Set_Floor(coords.x, coords.y);
 	}
 
-	public void Ï__Set_Cell__Floor(int x, int y)
+	public void Set_Floor(int x, int y)
 	{
 		cells[x][y] = 'f';
 	}
 
-	public int Q__Map_Width()
+	public int Width()
 	{
 		return cells.length;
 	}
 
-	public int Q__Map_Height()
+	public int Height()
 	{
 		return cells[0].length;
 	}
-
-	public boolean Q__Is_Cell__Wall(Coords cell)
+	
+	/**
+	 * Returns whether a cell belongs to the level.
+	 * I.e. whether its coordinates are within the proper range.
+	 * @param cell
+	 * @return
+	 */
+	public boolean Is_Within_Bounds(Coords cell)
 	{
-		return Q__Is_Cell__Wall(cell.x, cell.y);
+		int w = Width();
+		int h = Height();
+
+		return cell.x >= 0 && cell.y >= 0 && cell.x < w && cell.y < h;
 	}
 
-	public boolean Q__Is_Cell__Wall(int x, int y)
+	/**
+	 * Returns whether a specific cell (given its coordinates) is of type "wall".
+	 * 
+	 * @param cell
+	 * @return
+	 */
+	public boolean Is_Wall(Coords cell)
+	{
+		return Is_Wall(cell.x, cell.y);
+	}
+
+	/**
+	 * Returns whether a specific cell (given its coordinates' x, y) is of type
+	 * "wall".
+	 * 
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public boolean Is_Wall(int x, int y)
 	{
 		return cells[x][y] == 'w';
 	}
 
-	public boolean Q__Is_Cell__Floor(Coords cell)
+	/**
+	 * Returns whether a specific cell (given its coordinates) is of type "floor".
+	 * 
+	 * @param cell
+	 * @return
+	 */
+	public boolean Is_Floor(Coords cell)
 	{
-		return Q__Is_Cell__Floor(cell.x, cell.y);
+		return Is_Floor(cell.x, cell.y);
 	}
 
-	public boolean Q__Is_Cell__Floor(int x, int y)
+	/**
+	 * Returns whether a specific cell (given its coordinates' x, y) is of type
+	 * "floor".
+	 * 
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public boolean Is_Floor(int x, int y)
 	{
 		return cells[x][y] == 'f';
 	}
@@ -86,12 +128,12 @@ public class Level implements Cloneable
 	 * 
 	 * @return
 	 */
-	public ArrayList<Coords> Q__All_Cells()
+	public ArrayList<Coords> All_Cells__As_List()
 	{
 		ArrayList<Coords> cells_list = new ArrayList<Coords>();
 
-		int w = Q__Map_Width();
-		int h = Q__Map_Height();
+		int w = Width();
+		int h = Height();
 
 		for (int x = 0; x < w; x++)
 		{
@@ -111,18 +153,18 @@ public class Level implements Cloneable
 	 * 
 	 * @return
 	 */
-	public ArrayList<Coords> Q__Floor_Cells()
+	public ArrayList<Coords> Floor_Cells__As_List()
 	{
 		ArrayList<Coords> cells_list = new ArrayList<Coords>();
 
-		int w = Q__Map_Width();
-		int h = Q__Map_Height();
+		int w = Width();
+		int h = Height();
 
 		for (int x = 0; x < w; x++)
 		{
 			for (int y = 0; y < h; y++)
 			{
-				if (Q__Is_Cell__Floor(x, y))
+				if (Is_Floor(x, y))
 				{
 					Coords c = new Coords(x, y);
 					cells_list.add(c);
@@ -139,18 +181,18 @@ public class Level implements Cloneable
 	 * 
 	 * @return
 	 */
-	public ArrayList<Coords> Q__Wall_Cells()
+	public ArrayList<Coords> Wall_Cells__As_List()
 	{
 		ArrayList<Coords> cells_list = new ArrayList<Coords>();
 
-		int w = Q__Map_Width();
-		int h = Q__Map_Height();
+		int w = Width();
+		int h = Height();
 
 		for (int x = 0; x < w; x++)
 		{
 			for (int y = 0; y < h; y++)
 			{
-				if (Q__Is_Cell__Wall(x, y))
+				if (Is_Wall(x, y))
 				{
 					Coords c = new Coords(x, y);
 					cells_list.add(c);
@@ -169,23 +211,28 @@ public class Level implements Cloneable
 	 * @param cell
 	 * @return
 	 */
-	public ArrayList<Coords> Q__Cell__Neighbors(Coords cell)
+	public ArrayList<Coords> Cell_Neighbors(Coords cell)
 	{
 		ArrayList<Coords> cell_neighbors = new ArrayList<Coords>();
 
 		// If the cell is wall, then it has no neighbors.
 		// In that case, return an empty list.
-		if (Q__Is_Cell__Wall(cell))
+		if (Is_Wall(cell))
 		{
 			return cell_neighbors;
 		}
-		
+
+		if (Is_Within_Bounds(cell) == false)
+		{
+			return cell_neighbors;
+		}
+
 		// Otherwise, search left, right, up and down for floor cells.
 		// up
-		if (cell.y < Q__Map_Height() - 1)
+		if (cell.y < Height() - 1)
 		{
 			Coords up_cell = cell.Up();
-			if (Q__Is_Cell__Floor(up_cell))
+			if (Is_Floor(up_cell))
 			{
 				cell_neighbors.add(up_cell);
 			}
@@ -195,7 +242,7 @@ public class Level implements Cloneable
 		if (cell.y > 0)
 		{
 			Coords down_cell = cell.Down();
-			if (Q__Is_Cell__Floor(down_cell))
+			if (Is_Floor(down_cell))
 			{
 				cell_neighbors.add(down_cell);
 			}
@@ -205,17 +252,17 @@ public class Level implements Cloneable
 		if (cell.x > 0)
 		{
 			Coords left_cell = cell.Left();
-			if (Q__Is_Cell__Floor(left_cell))
+			if (Is_Floor(left_cell))
 			{
 				cell_neighbors.add(left_cell);
 			}
 		}
 
 		// right
-		if (cell.x < Q__Map_Width() - 1)
+		if (cell.x < Width() - 1)
 		{
 			Coords right_cell = cell.Right();
-			if (Q__Is_Cell__Floor(right_cell))
+			if (Is_Floor(right_cell))
 			{
 				cell_neighbors.add(right_cell);
 			}
