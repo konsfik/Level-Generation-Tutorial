@@ -6,65 +6,71 @@ import java.util.Random;
 
 import Core.Coords;
 import Core.Level;
+import GA.evaluation_methods.Evaluation_Method;
+import GA.level_generation_methods.Level_Generation_Method;
+import GA.mutation_methods.Mutation_Method;
+import GA.parent_selection_methods.Parent_Selection_Method;
 
 public class GA
 {
 	Level_Generation_Method level_generation_method;
 	Parent_Selection_Method parent_selection_method;
-	Mutation_Method level_mutation_method;
-	Evaluation_Method level_evaluation_method;
+	Mutation_Method mutation_method;
+	Evaluation_Method evaluation_method;
 	int elitism_size;
 	int population_size;
-	int tournament_size;
 
 	public ArrayList<Level_Individual> population;
 
-	GA(
+	public GA(
 			Level_Generation_Method level_generation_method,
 			Parent_Selection_Method parent_selection_method,
-			Mutation_Method level_mutation_method,
-			Evaluation_Method level_evaluation_method,
+			Mutation_Method mutation_method,
+			Evaluation_Method evaluation_method,
 			int population_size,
-			int elitism_size,
-			int tournament_size)
+			int elitism_size)
 	{
 		this.level_generation_method = level_generation_method;
 		this.parent_selection_method = parent_selection_method;
-		this.level_mutation_method = level_mutation_method;
-		this.level_evaluation_method = level_evaluation_method;
+		this.mutation_method = mutation_method;
+		this.evaluation_method = evaluation_method;
 
 		this.elitism_size = elitism_size;
 		this.population_size = population_size;
-		this.tournament_size = tournament_size;
 
 		population = new ArrayList<Level_Individual>();
 
 	}
 
-	public void Initialize_Population(
-			Random rand,
-			int width,
-			int height,
-			Coords entrance,
-			Coords exit)
+	/**
+	 * Generates, evaluates and sorts the initial population.
+	 * @param rand
+	 */
+	public void Initialize_Population(Random rand)
 	{
-
+		population = new ArrayList<Level_Individual>();
+		
 		for (int i = 0; i < population_size; i++)
 		{
-			Level level = level_generation_method.Generate_Level(
-					rand,
-					width,
-					height,
-					entrance,
-					exit);
+			// generate a new level from scratch,
+			// by utilizing the available level generator
+			Level level = level_generation_method.Generate_Level(rand);
 
+			// assign this level to a new individual
 			Level_Individual individual = new Level_Individual(level);
+			
+			// store the new individual in the population
+			population.add(individual);
 		}
-
+		
+		// evaluate all the individuals of the population
 		Evaluate_Population();
+		
+		// properly sort the population
 		Sort_Population();
 	}
 
+	
 	public void Run(
 			Random rand,
 			int num_steps)
@@ -75,6 +81,14 @@ public class GA
 		}
 	}
 
+	/**
+	 * This method includes all the steps to complete a single "generation".
+	 * It executes the following steps:
+	 * 1) Elitism
+	 * 2) Selection - mutation
+	 * 3) Evaluation and sorting of the new population.
+	 * @param rand
+	 */
 	public void Run_One_Step(Random rand)
 	{
 		ArrayList<Level_Individual> new_population = new ArrayList<Level_Individual>();
@@ -100,7 +114,7 @@ public class GA
 					population);
 
 			// mutate offspring
-			level_mutation_method.Mutate_Individual(
+			mutation_method.Mutate_Individual(
 					rand,
 					offspring);
 
@@ -130,7 +144,7 @@ public class GA
 	{
 		for (int i = 0; i < population_size; i++)
 		{
-			double fitness = level_evaluation_method.Evaluate_Individual(population.get(i));
+			double fitness = evaluation_method.Evaluate_Individual(population.get(i));
 			population.get(i).fitness = fitness;
 		}
 	}

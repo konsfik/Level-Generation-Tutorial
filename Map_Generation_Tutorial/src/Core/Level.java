@@ -271,6 +271,37 @@ public class Level implements Cloneable
 		return cell_neighbors;
 	}
 
+	public String To_ASCII() {
+		String ascii_map = "";
+
+		int w = Width();
+		int h = Height();
+
+		for (int y = 0; y < h; y++)
+		{
+			for (int x = 0; x < w; x++)
+			{
+				if (entrance.x == x && entrance.y == y)
+				{
+					ascii_map += 'e';
+				}
+				else if (exit.x == x && exit.y == y)
+				{
+					ascii_map += 'x';
+				}
+				else
+				{
+					char cell = cells[x][y];
+					ascii_map += cell;
+				}
+			}
+			ascii_map += "\n";
+		}
+
+		return ascii_map;
+	}
+	
+	
 	/**
 	 * Private constructor, to be used by the clone() method.
 	 * 

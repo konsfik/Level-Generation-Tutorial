@@ -1,4 +1,4 @@
-package GA;
+package GA.level_generation_methods;
 
 import java.util.Random;
 
@@ -8,23 +8,32 @@ import Core.Level;
 public class LGM__Random extends Level_Generation_Method
 {
 
-	@Override
-	public Level Generate_Level(
-			Random rand,
-			int width,
-			int height,
+	public LGM__Random(
+			int level_width,
+			int level_height,
 			Coords entrance,
 			Coords exit)
 	{
-		Level level = new Level(
-				width,
-				height,
+		super(
+				level_width,
+				level_height,
 				entrance,
 				exit);
 
-		for (int x = 0; x < width; x++)
+	}
+
+	@Override
+	public Level Generate_Level(Random rand)
+	{
+		Level level = new Level(
+				level_width,
+				level_height,
+				entrance,
+				exit);
+
+		for (int x = 0; x < level_width; x++)
 		{
-			for (int y = 0; y < height; y++)
+			for (int y = 0; y < level_height; y++)
 			{
 				double dice_roll = rand.nextDouble();
 				if (dice_roll < 0.5)
@@ -37,7 +46,7 @@ public class LGM__Random extends Level_Generation_Method
 				}
 			}
 		}
-		
+
 		return level;
 	}
 

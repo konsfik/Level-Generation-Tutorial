@@ -22,12 +22,27 @@ public class Level_Utilities
 	}
 
 	public static int Distance_Between_Cells(
-			Level map,
-			Coords cell_1,
-			Coords cell_2)
+			Level level,
+			Coords root,
+			Coords destination)
 	{
+		ArrayList<Coords> shortest_path = Shortest_Path__BFS(
+				level,
+				root,
+				destination);
 
-		return 0;
+		if (shortest_path == null)
+		{
+			return -1;
+		}
+		else if (shortest_path.size() == 0)
+		{
+			return -1;
+		}
+		else
+		{
+			return shortest_path.size();
+		}
 	}
 
 	/**
@@ -65,7 +80,7 @@ public class Level_Utilities
 
 		boolean found_destination = false;
 
-		while (search_queue.size() > 0)
+		while (search_queue.size() > 0 && found_destination == false)
 		{
 			/**
 			 * Remove the first element of the search queue. I.e. the one that was first
@@ -131,14 +146,22 @@ public class Level_Utilities
 		{
 			return new ArrayList<Coords>();
 		}
+		if (level.Is_Within_Bounds(root) == false)
+		{
+			return new ArrayList<Coords>();
+		}
+		if (level.Is_Within_Bounds(destination) == false)
+		{
+			return new ArrayList<Coords>();
+		}
 
 		ArrayList<Coords> visited_cells = new ArrayList<Coords>();
 		ArrayList<Coords> search_queue = new ArrayList<Coords>();
-		
+
 		ArrayList<Coords> floor_cells = level.Floor_Cells__As_List();
-		
+
 		HashMap<Coords, Coords> predecessors = new HashMap<Coords, Coords>();
-		
+
 		for (Coords floor_cell : floor_cells)
 		{
 			predecessors.put(floor_cell, floor_cell);
@@ -148,7 +171,7 @@ public class Level_Utilities
 
 		boolean found_destination = false;
 
-		while (search_queue.size() > 0)
+		while (search_queue.size() > 0 && found_destination == false)
 		{
 			/**
 			 * Remove the first element of the search queue. I.e. the one that was first
@@ -167,7 +190,7 @@ public class Level_Utilities
 				}
 			}
 
-			Collections.shuffle(unvisited_neighbors);
+//			Collections.shuffle(unvisited_neighbors);
 
 			// process all unvisited neighbors
 			for (Coords neighbor : unvisited_neighbors)
@@ -182,7 +205,7 @@ public class Level_Utilities
 				}
 			}
 		}
-		
+
 		if (found_destination == false)
 		{
 			return new ArrayList<Coords>();

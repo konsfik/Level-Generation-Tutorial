@@ -1,11 +1,16 @@
-package GA;
+package GA.parent_selection_methods;
 
 import java.util.ArrayList;
 import java.util.Random;
 
+import GA.Level_Individual;
+
 public class PSM__Roulette_Wheel_Selection extends Parent_Selection_Method
 {
 
+	/**
+	 * https://en.wikipedia.org/wiki/Fitness_proportionate_selection
+	 */
 	@Override
 	public Level_Individual Select_Parent__Return_Clone(
 			Random rand,
