@@ -1,11 +1,7 @@
-import java.awt.*;
+import java.awt.image.*;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Stroke;
-import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,14 +11,11 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
-import Core.Coords;
-import Core.Level;
-import Core.Level_Utilities;
+import Core.*;
 import GA.GA;
 import GA.Level_Individual;
 import GA.evaluation_methods.EM__Maximize_Solution_Path;
 import GA.evaluation_methods.Evaluation_Method;
-import GA.level_generation_methods.LGM__Random;
 import GA.level_generation_methods.LGM__Random__Wall_Probability;
 import GA.level_generation_methods.Level_Generation_Method;
 import GA.mutation_methods.MM__Flip_Random_Cells__Probability;
@@ -77,6 +70,11 @@ public class Test_1
 			// if does not exist?
 			Files.createDirectories(current_rep_folder_path);
 			
+			String log_file_path = output_folder_name + "\\" + current_rep_folder_name + 
+					"\\log.txt";
+			FileWriter myWriter = new FileWriter(log_file_path);
+//			myWriter.write("Files in Java might be tricky, but it is fun enough!");
+	      
 			ga.Initialize_Population(rand);
 			
 			for (int i = 0; i < number_of_generations; i++)
@@ -88,7 +86,14 @@ public class Test_1
 						"generation: " + Integer.toString(i) +
 								" | " +
 								"best fitness: " + Double.toString(best_fitness));
-
+				
+				myWriter.append(
+						Integer.toString(i)
+						+ ","
+						+ Double.toString(best_fitness)
+						+ "\n"
+						);
+				
 				Level_Individual ind = ga.Best_Individual();
 				BufferedImage img = Level_Drawing_Utilities.Draw_Level(ind.level_state);
 				
@@ -97,6 +102,8 @@ public class Test_1
 				
 				ImageIO.write(img, "png", new File(image_path.toString()));
 			}
+			
+			myWriter.close();
 		}
 		
 
