@@ -5,4 +5,4 @@
  * @author kostas
  *
  */
-package GA.evaluation_methods;
+package genetic_algorithm;

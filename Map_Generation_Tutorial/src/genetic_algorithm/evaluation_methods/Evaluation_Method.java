@@ -1,6 +1,6 @@
-package GA.evaluation_methods;
+package genetic_algorithm.evaluation_methods;
 
-import GA.Level_Individual;
+import genetic_algorithm.Level_Individual;
 
 public abstract class Evaluation_Method
 {

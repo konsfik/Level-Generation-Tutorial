@@ -1,20 +1,18 @@
-package GA.level_generation_methods;
+package genetic_algorithm.level_generation_methods;
 
 import java.util.Random;
 
 import Core.Coords;
 import Core.Level;
 
-public class LGM__Random__Wall_Probability extends Level_Generation_Method
+public class LGM__Random extends Level_Generation_Method
 {
-	public double wall_probability;
 
-	public LGM__Random__Wall_Probability(
+	public LGM__Random(
 			int level_width,
 			int level_height,
 			Coords entrance,
-			Coords exit,
-			double wall_probability)
+			Coords exit)
 	{
 		super(
 				level_width,
@@ -22,7 +20,6 @@ public class LGM__Random__Wall_Probability extends Level_Generation_Method
 				entrance,
 				exit);
 
-		this.wall_probability = wall_probability;
 	}
 
 	@Override
@@ -39,7 +36,7 @@ public class LGM__Random__Wall_Probability extends Level_Generation_Method
 			for (int y = 0; y < level_height; y++)
 			{
 				double dice_roll = rand.nextDouble();
-				if (dice_roll < wall_probability)
+				if (dice_roll < 0.5)
 				{
 					level.Set_Wall(x, y);
 				}
@@ -52,4 +49,5 @@ public class LGM__Random__Wall_Probability extends Level_Generation_Method
 
 		return level;
 	}
+
 }

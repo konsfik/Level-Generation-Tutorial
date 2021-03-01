@@ -1,4 +1,4 @@
-package GA;
+package genetic_algorithm;
 
 import Core.*;
 

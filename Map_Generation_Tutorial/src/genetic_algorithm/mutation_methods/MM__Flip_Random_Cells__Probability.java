@@ -1,8 +1,8 @@
-package GA.mutation_methods;
+package genetic_algorithm.mutation_methods;
 
 import java.util.Random;
 
-import GA.Level_Individual;
+import genetic_algorithm.Level_Individual;
 
 public class MM__Flip_Random_Cells__Probability extends Mutation_Method
 {

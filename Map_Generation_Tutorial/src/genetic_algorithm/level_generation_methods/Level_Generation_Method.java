@@ -1,4 +1,4 @@
-package GA.level_generation_methods;
+package genetic_algorithm.level_generation_methods;
 
 import java.util.Random;
 import Core.*;

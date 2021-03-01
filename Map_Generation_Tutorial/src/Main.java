@@ -7,8 +7,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import Core.*;
-import GA.*;
-import GA.level_generation_methods.LGM__Random;
+import genetic_algorithm.*;
+import genetic_algorithm.level_generation_methods.LGM__Random;
 
 public class Main
 {

@@ -1,9 +1,9 @@
-package GA.parent_selection_methods;
+package genetic_algorithm.parent_selection_methods;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import GA.Level_Individual;
+import genetic_algorithm.Level_Individual;
 
 public class PSM__Roulette_Wheel_Selection extends Parent_Selection_Method
 {

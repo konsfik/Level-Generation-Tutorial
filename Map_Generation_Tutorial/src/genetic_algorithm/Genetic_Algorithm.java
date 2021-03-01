@@ -1,4 +1,4 @@
-package GA;
+package genetic_algorithm;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,12 +6,12 @@ import java.util.Random;
 
 import Core.Coords;
 import Core.Level;
-import GA.evaluation_methods.Evaluation_Method;
-import GA.level_generation_methods.Level_Generation_Method;
-import GA.mutation_methods.Mutation_Method;
-import GA.parent_selection_methods.Parent_Selection_Method;
+import genetic_algorithm.evaluation_methods.Evaluation_Method;
+import genetic_algorithm.level_generation_methods.Level_Generation_Method;
+import genetic_algorithm.mutation_methods.Mutation_Method;
+import genetic_algorithm.parent_selection_methods.Parent_Selection_Method;
 
-public class GA
+public class Genetic_Algorithm
 {
 	Level_Generation_Method level_generation_method;
 	Parent_Selection_Method parent_selection_method;
@@ -22,7 +22,7 @@ public class GA
 
 	public ArrayList<Level_Individual> population;
 
-	public GA(
+	public Genetic_Algorithm(
 			Level_Generation_Method level_generation_method,
 			Parent_Selection_Method parent_selection_method,
 			Mutation_Method mutation_method,

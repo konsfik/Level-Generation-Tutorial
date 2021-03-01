@@ -1,7 +1,7 @@
-package GA.evaluation_methods;
+package genetic_algorithm.evaluation_methods;
 
 import Core.Level_Utilities;
-import GA.Level_Individual;
+import genetic_algorithm.Level_Individual;
 
 public class EM__Maximize_Solution_Path extends Evaluation_Method
 {
