@@ -1,3 +1,4 @@
+package Experiments;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -31,7 +32,7 @@ public class Level_Drawing_Utilities
 			for (int x = 0; x < w; x++)
 			{
 
-				if (level.Is_Floor(x, y))
+				if (level.Is_Cell__Floor(x, y))
 				{
 					gr.setColor(Color.WHITE);
 					gr.fillRect(

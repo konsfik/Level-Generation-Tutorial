@@ -63,11 +63,11 @@ public class Level_Utilities
 			Coords destination)
 	{
 
-		if (level.Is_Floor(root) == false)
+		if (level.Is_Cell__Floor(root) == false)
 		{
 			return false;
 		}
-		if (level.Is_Floor(destination) == false)
+		if (level.Is_Cell__Floor(destination) == false)
 		{
 			return false;
 		}
@@ -138,19 +138,19 @@ public class Level_Utilities
 			short_path.add(root);
 			return short_path;
 		}
-		if (level.Is_Floor(root) == false)
+		if (level.Is_Cell__Floor(root) == false)
 		{
 			return new ArrayList<Coords>();
 		}
-		if (level.Is_Floor(destination) == false)
+		if (level.Is_Cell__Floor(destination) == false)
 		{
 			return new ArrayList<Coords>();
 		}
-		if (level.Is_Within_Bounds(root) == false)
+		if (level.Is_Cell__Within_Bounds(root) == false)
 		{
 			return new ArrayList<Coords>();
 		}
-		if (level.Is_Within_Bounds(destination) == false)
+		if (level.Is_Cell__Within_Bounds(destination) == false)
 		{
 			return new ArrayList<Coords>();
 		}
@@ -158,7 +158,7 @@ public class Level_Utilities
 		ArrayList<Coords> visited_cells = new ArrayList<Coords>();
 		ArrayList<Coords> search_queue = new ArrayList<Coords>();
 
-		ArrayList<Coords> floor_cells = level.Floor_Cells__As_List();
+		ArrayList<Coords> floor_cells = level.Cells__Floor__As_List();
 
 		HashMap<Coords, Coords> predecessors = new HashMap<Coords, Coords>();
 

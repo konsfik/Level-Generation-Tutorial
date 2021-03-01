@@ -28,7 +28,7 @@ public class MM__Flip_Random_Cells__Probability extends Mutation_Method
 				if (dice_roll < flip_probability)
 				{
 					// perform the flip here
-					if (individual.level_state.Is_Floor(x, y))
+					if (individual.level_state.Is_Cell__Floor(x, y))
 					{
 						individual.level_state.Set_Wall(x, y);
 					}

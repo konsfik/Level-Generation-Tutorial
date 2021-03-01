@@ -21,10 +21,13 @@ public class EM__Maximize_Solution_Path extends Evaluation_Method
 		}
 		else
 		{
+			// approximation of the maximum possible solution path length
 			int w = individual.level_state.Width();
 			int h = individual.level_state.Height();
-			int max_length = w * h - ((w - 1) * (h - 1) / 2);
-			double score = (double) path_length / (double) max_length;
+			int max_path_length = w * h - ((w - 1) * (h - 1) / 2);
+			
+			// score calculation
+			double score = (double) path_length / (double) max_path_length;
 			return score;
 		}
 	}

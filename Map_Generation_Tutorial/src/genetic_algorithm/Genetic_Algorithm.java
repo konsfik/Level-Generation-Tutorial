@@ -44,12 +44,13 @@ public class Genetic_Algorithm
 
 	/**
 	 * Generates, evaluates and sorts the initial population.
+	 * 
 	 * @param rand
 	 */
 	public void Initialize_Population(Random rand)
 	{
 		population = new ArrayList<Level_Individual>();
-		
+
 		for (int i = 0; i < population_size; i++)
 		{
 			// generate a new level from scratch,
@@ -58,19 +59,18 @@ public class Genetic_Algorithm
 
 			// assign this level to a new individual
 			Level_Individual individual = new Level_Individual(level);
-			
+
 			// store the new individual in the population
 			population.add(individual);
 		}
-		
+
 		// evaluate all the individuals of the population
 		Evaluate_Population();
-		
+
 		// properly sort the population
 		Sort_Population();
 	}
 
-	
 	public void Run(
 			Random rand,
 			int num_steps)
@@ -82,11 +82,10 @@ public class Genetic_Algorithm
 	}
 
 	/**
-	 * This method includes all the steps to complete a single "generation".
-	 * It executes the following steps:
-	 * 1) Elitism
-	 * 2) Selection - mutation
-	 * 3) Evaluation and sorting of the new population.
+	 * This method includes all the steps to complete a single "generation". It
+	 * executes the following steps: 1) Elitism 2) Selection - mutation 3)
+	 * Evaluation and sorting of the new population.
+	 * 
 	 * @param rand
 	 */
 	public void Run_One_Step(Random rand)
@@ -144,8 +143,16 @@ public class Genetic_Algorithm
 	{
 		for (int i = 0; i < population_size; i++)
 		{
-			double fitness = evaluation_method.Evaluate_Individual(population.get(i));
-			population.get(i).fitness = fitness;
+			boolean is_solvable = population.get(i).level_state.Is_Level__Solvable();
+			if (is_solvable == false)
+			{
+				population.get(i).fitness = 0;
+			}
+			else
+			{
+				double fitness = evaluation_method.Evaluate_Individual(population.get(i));
+				population.get(i).fitness = fitness;
+			}
 		}
 	}
 

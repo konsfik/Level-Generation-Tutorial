@@ -4,7 +4,11 @@ import java.util.ArrayList;
 
 public class Level implements Cloneable
 {
+	// the level's grid - cells are represented as a 2D array of characters, where
+	// 'f' denotes floor tiles and 'w' denotes wall tiles. It is assumed that the
+	// character can only move up / down / left / right (not diagonally)
 	public char[][] cells;
+	// the level also has an entrance and an exit whose coordinates are stored here.
 	public Coords entrance;
 	public Coords exit;
 
@@ -60,14 +64,26 @@ public class Level implements Cloneable
 	{
 		return cells[0].length;
 	}
-	
+
 	/**
-	 * Returns whether a cell belongs to the level.
-	 * I.e. whether its coordinates are within the proper range.
+	 * Returns whether the level is solvable. I.e. whether it is possible to go from
+	 * the entance to the exit.
+	 * 
+	 * @return
+	 */
+	public boolean Is_Level__Solvable()
+	{
+		return Level_Utilities.Path_Exists(this, entrance, exit);
+	}
+
+	/**
+	 * Returns whether a cell belongs to the level. I.e. whether its coordinates are
+	 * within the proper range.
+	 * 
 	 * @param cell
 	 * @return
 	 */
-	public boolean Is_Within_Bounds(Coords cell)
+	public boolean Is_Cell__Within_Bounds(Coords cell)
 	{
 		int w = Width();
 		int h = Height();
@@ -81,9 +97,9 @@ public class Level implements Cloneable
 	 * @param cell
 	 * @return
 	 */
-	public boolean Is_Wall(Coords cell)
+	public boolean Is_Cell__Wall(Coords cell)
 	{
-		return Is_Wall(cell.x, cell.y);
+		return Is_Cell__Wall(cell.x, cell.y);
 	}
 
 	/**
@@ -94,7 +110,7 @@ public class Level implements Cloneable
 	 * @param y
 	 * @return
 	 */
-	public boolean Is_Wall(int x, int y)
+	public boolean Is_Cell__Wall(int x, int y)
 	{
 		return cells[x][y] == 'w';
 	}
@@ -105,9 +121,9 @@ public class Level implements Cloneable
 	 * @param cell
 	 * @return
 	 */
-	public boolean Is_Floor(Coords cell)
+	public boolean Is_Cell__Floor(Coords cell)
 	{
-		return Is_Floor(cell.x, cell.y);
+		return Is_Cell__Floor(cell.x, cell.y);
 	}
 
 	/**
@@ -118,7 +134,7 @@ public class Level implements Cloneable
 	 * @param y
 	 * @return
 	 */
-	public boolean Is_Floor(int x, int y)
+	public boolean Is_Cell__Floor(int x, int y)
 	{
 		return cells[x][y] == 'f';
 	}
@@ -128,7 +144,7 @@ public class Level implements Cloneable
 	 * 
 	 * @return
 	 */
-	public ArrayList<Coords> All_Cells__As_List()
+	public ArrayList<Coords> Cells__All__As_List()
 	{
 		ArrayList<Coords> cells_list = new ArrayList<Coords>();
 
@@ -153,7 +169,7 @@ public class Level implements Cloneable
 	 * 
 	 * @return
 	 */
-	public ArrayList<Coords> Floor_Cells__As_List()
+	public ArrayList<Coords> Cells__Floor__As_List()
 	{
 		ArrayList<Coords> cells_list = new ArrayList<Coords>();
 
@@ -164,7 +180,7 @@ public class Level implements Cloneable
 		{
 			for (int y = 0; y < h; y++)
 			{
-				if (Is_Floor(x, y))
+				if (Is_Cell__Floor(x, y))
 				{
 					Coords c = new Coords(x, y);
 					cells_list.add(c);
@@ -181,7 +197,7 @@ public class Level implements Cloneable
 	 * 
 	 * @return
 	 */
-	public ArrayList<Coords> Wall_Cells__As_List()
+	public ArrayList<Coords> Cells__Wall__As_List()
 	{
 		ArrayList<Coords> cells_list = new ArrayList<Coords>();
 
@@ -192,7 +208,7 @@ public class Level implements Cloneable
 		{
 			for (int y = 0; y < h; y++)
 			{
-				if (Is_Wall(x, y))
+				if (Is_Cell__Wall(x, y))
 				{
 					Coords c = new Coords(x, y);
 					cells_list.add(c);
@@ -217,12 +233,12 @@ public class Level implements Cloneable
 
 		// If the cell is wall, then it has no neighbors.
 		// In that case, return an empty list.
-		if (Is_Wall(cell))
+		if (Is_Cell__Wall(cell))
 		{
 			return cell_neighbors;
 		}
 
-		if (Is_Within_Bounds(cell) == false)
+		if (Is_Cell__Within_Bounds(cell) == false)
 		{
 			return cell_neighbors;
 		}
@@ -232,7 +248,7 @@ public class Level implements Cloneable
 		if (cell.y < Height() - 1)
 		{
 			Coords up_cell = cell.Up();
-			if (Is_Floor(up_cell))
+			if (Is_Cell__Floor(up_cell))
 			{
 				cell_neighbors.add(up_cell);
 			}
@@ -242,7 +258,7 @@ public class Level implements Cloneable
 		if (cell.y > 0)
 		{
 			Coords down_cell = cell.Down();
-			if (Is_Floor(down_cell))
+			if (Is_Cell__Floor(down_cell))
 			{
 				cell_neighbors.add(down_cell);
 			}
@@ -252,7 +268,7 @@ public class Level implements Cloneable
 		if (cell.x > 0)
 		{
 			Coords left_cell = cell.Left();
-			if (Is_Floor(left_cell))
+			if (Is_Cell__Floor(left_cell))
 			{
 				cell_neighbors.add(left_cell);
 			}
@@ -262,7 +278,7 @@ public class Level implements Cloneable
 		if (cell.x < Width() - 1)
 		{
 			Coords right_cell = cell.Right();
-			if (Is_Floor(right_cell))
+			if (Is_Cell__Floor(right_cell))
 			{
 				cell_neighbors.add(right_cell);
 			}
@@ -271,7 +287,8 @@ public class Level implements Cloneable
 		return cell_neighbors;
 	}
 
-	public String To_ASCII() {
+	public String To_ASCII()
+	{
 		String ascii_map = "";
 
 		int w = Width();
@@ -300,8 +317,7 @@ public class Level implements Cloneable
 
 		return ascii_map;
 	}
-	
-	
+
 	/**
 	 * Private constructor, to be used by the clone() method.
 	 * 
