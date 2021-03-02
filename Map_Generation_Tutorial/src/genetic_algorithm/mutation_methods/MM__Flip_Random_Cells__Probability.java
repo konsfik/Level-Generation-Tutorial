@@ -4,6 +4,15 @@ import java.util.Random;
 
 import genetic_algorithm.Level_Individual;
 
+/**
+ * Mutation method that operates by simply flipping the value of cells
+ * (converting wall to floor and vice versa). The method iterates over all the
+ * cells of the level either flips them or not, based on a user defined
+ * probability.
+ * 
+ * @author kostas
+ *
+ */
 public class MM__Flip_Random_Cells__Probability extends Mutation_Method
 {
 	public double flip_probability;

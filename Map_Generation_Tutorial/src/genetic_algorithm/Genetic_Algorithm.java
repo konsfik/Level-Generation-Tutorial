@@ -6,6 +6,7 @@ import java.util.Random;
 
 import Core.Coords;
 import Core.Level;
+import genetic_algorithm.crossover_methods.Crossover_Method;
 import genetic_algorithm.evaluation_methods.Evaluation_Method;
 import genetic_algorithm.level_generation_methods.Level_Generation_Method;
 import genetic_algorithm.mutation_methods.Mutation_Method;
@@ -15,6 +16,7 @@ public class Genetic_Algorithm
 {
 	Level_Generation_Method level_generation_method;
 	Parent_Selection_Method parent_selection_method;
+	Crossover_Method crossover_method;
 	Mutation_Method mutation_method;
 	Evaluation_Method evaluation_method;
 	int elitism_size;
@@ -25,6 +27,7 @@ public class Genetic_Algorithm
 	public Genetic_Algorithm(
 			Level_Generation_Method level_generation_method,
 			Parent_Selection_Method parent_selection_method,
+			Crossover_Method crossover_method,
 			Mutation_Method mutation_method,
 			Evaluation_Method evaluation_method,
 			int population_size,
@@ -32,6 +35,7 @@ public class Genetic_Algorithm
 	{
 		this.level_generation_method = level_generation_method;
 		this.parent_selection_method = parent_selection_method;
+		this.crossover_method = crossover_method;
 		this.mutation_method = mutation_method;
 		this.evaluation_method = evaluation_method;
 
@@ -107,11 +111,17 @@ public class Genetic_Algorithm
 		// size.
 		while (new_population.size() < population_size)
 		{
-			// select parent -> generate offspring (as copy of parent)
-			Level_Individual offspring = parent_selection_method.Select_Parent__Return_Clone(
+			// select the two parents
+			Level_Individual parent_1 = parent_selection_method.Select_Parent__Return_Clone(
 					rand,
 					population);
-
+			Level_Individual parent_2 = parent_selection_method.Select_Parent__Return_Clone(
+					rand,
+					population);
+			
+			// generate offspring (by applying crossover to the two parents)
+			Level_Individual offspring = crossover_method.Crossover_Parents(rand, parent_1, parent_2);
+			
 			// mutate offspring
 			mutation_method.Mutate_Individual(
 					rand,
