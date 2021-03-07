@@ -15,10 +15,12 @@ import genetic_algorithm.parent_selection_methods.Parent_Selection_Method;
 public class Genetic_Algorithm
 {
 	Level_Generation_Method level_generation_method;
+	
 	Parent_Selection_Method parent_selection_method;
 	Crossover_Method crossover_method;
 	Mutation_Method mutation_method;
 	Evaluation_Method evaluation_method;
+	
 	int elitism_size;
 	int population_size;
 
@@ -94,12 +96,11 @@ public class Genetic_Algorithm
 	 */
 	public void Run_One_Step(Random rand)
 	{
+		// Create an empty list, for temporarily storing the new population.
 		ArrayList<Level_Individual> new_population = new ArrayList<Level_Individual>();
 
-		// Add the n - best individuals to the new population directly (without
-		// mutation)
-		// This is called elitism.
-		// I.e. a number of the best individuals survive through generations.
+		// 1. Elitism: Add the n - best individuals to the new population directly
+		// (without mutation)
 		for (int i = 0; i < elitism_size; i++)
 		{
 			Level_Individual survivor = (Level_Individual) population.get(i).clone();
@@ -107,35 +108,35 @@ public class Genetic_Algorithm
 		}
 
 		// Select parents, create offspring, mutate offspring, add them to the new
-		// population. Repeat until the new population has reached the predetermined
-		// size.
+		// population.
+		// Repeat until the new population has reached the predetermined size.
 		while (new_population.size() < population_size)
 		{
-			// select the two parents
+			// 2. Select the two parents
 			Level_Individual parent_1 = parent_selection_method.Select_Parent__Return_Clone(
 					rand,
 					population);
 			Level_Individual parent_2 = parent_selection_method.Select_Parent__Return_Clone(
 					rand,
 					population);
-			
-			// generate offspring (by applying crossover to the two parents)
+
+			// 3. Generate offspring (by applying crossover to the two parents)
 			Level_Individual offspring = crossover_method.Crossover_Parents(rand, parent_1, parent_2);
-			
-			// mutate offspring
+
+			// 4. Mutate offspring
 			mutation_method.Mutate_Individual(
 					rand,
 					offspring);
 
-			// add the mutant to the new population
+			// 5. Add the mutant to the new population
 			new_population.add(offspring);
 
 		}
 
-		// replace the old population with the new one
+		// 6. Replace the old population with the new one
 		population = new_population;
 
-		// evaluate and sort the population...
+		// 7. evaluate and sort the population...
 		Evaluate_Population();
 		Sort_Population();
 	}
@@ -145,6 +146,7 @@ public class Genetic_Algorithm
 		// call the sort method, to arrange the population from smaller to higher
 		// fitness
 		Collections.sort(population);
+		
 		// reverse the list, so that we have the best individuals first
 		Collections.reverse(population);
 	}

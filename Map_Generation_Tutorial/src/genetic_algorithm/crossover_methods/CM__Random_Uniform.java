@@ -4,6 +4,15 @@ import java.util.Random;
 
 import genetic_algorithm.Level_Individual;
 
+/**
+ * This method generates an offspring initially as a copy of one of the two parents.
+ * Then, it iterates over its cells and for each cell:
+ * 		it selects one of the two parents at random,
+ * 		and copies the cell value of that parent to its cell
+ * Thus, the resulting level is a mixture of the parents.
+ * @author kostas
+ *
+ */
 public class CM__Random_Uniform extends Crossover_Method
 {
 
