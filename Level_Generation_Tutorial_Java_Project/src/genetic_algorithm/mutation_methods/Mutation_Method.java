@@ -8,7 +8,7 @@ import genetic_algorithm.Level_Individual;
  * Abstract class that serves as a parent for all mutation methods. Mutation
  * methods are used in the context of the Genetic_Algorithm class.
  * 
- * @author kostas
+ * @author Konstantinos Sfikas
  *
  */
 public abstract class Mutation_Method

@@ -5,6 +5,15 @@ import java.util.Random;
 import core.Coords;
 import core.Level;
 
+/**
+ * A concrete implementation of a level generation method. This method generates
+ * a level by randomly setting each cell of the level to either wall or floor.
+ * However, there is a specific probability for asigning walls, thus the user
+ * may control the density of walls in the generated levels.
+ * 
+ * @author Konstantinos Sfikas
+ *
+ */
 public class LGM__Random__Wall_Probability extends Level_Generation_Method
 {
 	public double wall_probability;

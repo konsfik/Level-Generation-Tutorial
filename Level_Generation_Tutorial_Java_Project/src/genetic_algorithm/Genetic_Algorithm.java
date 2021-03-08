@@ -113,7 +113,7 @@ public class Genetic_Algorithm
 		ArrayList<Level_Individual> new_population = new ArrayList<Level_Individual>();
 
 		// 1. Elitism: Add the n - best individuals to the new population directly
-		// (without mutation)
+		// (without mutation).
 		for (int i = 0; i < elitism_size; i++)
 		{
 			Level_Individual survivor = (Level_Individual) population.get(i).clone();
@@ -160,9 +160,10 @@ public class Genetic_Algorithm
 	 */
 	private void Sort_Population(Random rand)
 	{
-		// shuffle before sorting, to randomize the order of individuals with common fitness
+		// shuffle before sorting, to randomize the order of individuals with common
+		// fitness
 		Collections.shuffle(population, rand);
-		
+
 		// call the sort method, to arrange the population from smaller to higher
 		// fitness
 		Collections.sort(population);

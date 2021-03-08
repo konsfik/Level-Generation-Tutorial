@@ -3,7 +3,9 @@ package core;
 import java.util.ArrayList;
 
 /**
- * State representation of a Level.
+ * State representation of a Level. Includes a table of characters, where 'w'
+ * represents a wall anf 'f' represents a floor tile. Also includes the entrance
+ * and exit location.
  * 
  * @author Konstantinos Sfikas
  *

@@ -10,7 +10,7 @@ import genetic_algorithm.Level_Individual;
  * cells of the level either flips them or not, based on a user defined
  * probability.
  * 
- * @author kostas
+ * @author Konstantinos Sfikas
  *
  */
 public class MM__Flip_Random_Cells__Probability extends Mutation_Method

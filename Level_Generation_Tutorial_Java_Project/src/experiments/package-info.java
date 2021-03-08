@@ -2,7 +2,7 @@
  * 
  */
 /**
- * @author kostas
+ * @author Konstantinos Sfikas
  *
  */
 package experiments;
