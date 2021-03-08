@@ -38,10 +38,10 @@ public class Experiment_Runner
 		 * initial population.
 		 */
 		Level_Generation_Method level_generation_method = new LGM__Random__Wall_Probability(
-				51,
-				51,
+				21,
+				21,
 				new Coords(0, 10),
-				new Coords(50, 10),
+				new Coords(20, 10),
 				0.2);
 
 		/*
