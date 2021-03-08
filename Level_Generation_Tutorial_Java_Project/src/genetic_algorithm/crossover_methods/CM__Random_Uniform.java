@@ -17,7 +17,7 @@ public class CM__Random_Uniform extends Crossover_Method
 {
 
 	@Override
-	public Level_Individual Crossover_Parents(
+	public Level_Individual Combine_Parents(
 			Random rand,
 			Level_Individual parent_1,
 			Level_Individual parent_2)

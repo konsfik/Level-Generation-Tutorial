@@ -121,7 +121,7 @@ public class Genetic_Algorithm
 					population);
 
 			// 3. Generate offspring (by applying crossover to the two parents)
-			Level_Individual offspring = crossover_method.Crossover_Parents(rand, parent_1, parent_2);
+			Level_Individual offspring = crossover_method.Combine_Parents(rand, parent_1, parent_2);
 
 			// 4. Mutate offspring
 			mutation_method.Mutate_Individual(
