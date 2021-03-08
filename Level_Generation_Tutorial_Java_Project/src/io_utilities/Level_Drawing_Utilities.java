@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import core.Coords;
 import core.Level;
-import core.Level_Utilities;
 
 public class Level_Drawing_Utilities
 {
@@ -71,8 +70,7 @@ public class Level_Drawing_Utilities
 
 		// draw the path...
 
-		ArrayList<Coords> solution_path = Level_Utilities.Shortest_Path__BFS(
-				level,
+		ArrayList<Coords> solution_path = level.Shortest_Path__BFS(
 				level.entrance,
 				level.exit);
 

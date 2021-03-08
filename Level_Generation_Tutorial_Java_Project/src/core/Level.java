@@ -1,6 +1,8 @@
 package core;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 
 /**
  * State representation of a Level. Includes a table of characters, where 'w'
@@ -43,31 +45,62 @@ public class Level implements Cloneable
 
 	}
 
+	/**
+	 * Sets a specific cell as wall (based on coordinates)
+	 * 
+	 * @param coords
+	 */
 	public void Set_Wall(Coords coords)
 	{
 		Set_Wall(coords.x, coords.y);
 	}
 
+	/**
+	 * Sets a specific cell as wall (based on coordinates x, y)
+	 * 
+	 * @param x
+	 * @param y
+	 */
 	public void Set_Wall(int x, int y)
 	{
 		cells[x][y] = 'w';
 	}
 
+	/**
+	 * Sets a specific cell as floor (based on coordinates)
+	 * 
+	 * @param coords
+	 */
 	public void Set_Floor(Coords coords)
 	{
 		Set_Floor(coords.x, coords.y);
 	}
 
+	/**
+	 * Sets a specific cell as floor (based on coordinates x, y)
+	 * 
+	 * @param coords
+	 */
 	public void Set_Floor(int x, int y)
 	{
 		cells[x][y] = 'f';
 	}
 
+	/**
+	 * Returns the width of the level
+	 * 
+	 * @return
+	 */
 	public int Width()
 	{
 		return cells.length;
 	}
 
+	/**
+	 * Returns the height of the level
+	 * 
+	 * @return
+	 */
 	public int Height()
 	{
 		return cells[0].length;
@@ -81,7 +114,7 @@ public class Level implements Cloneable
 	 */
 	public boolean Is_Level__Solvable()
 	{
-		return Level_Utilities.Path_Exists(this, entrance, exit);
+		return Path_Exists(entrance, exit);
 	}
 
 	/**
@@ -295,6 +328,15 @@ public class Level implements Cloneable
 		return cell_neighbors;
 	}
 
+	/**
+	 * Converts the level to an ASCII map, where 'f' is floor, 'w' is wall, 'E' is
+	 * entrance (when entrance is floor), 'e' is entrance (when entrance is wall),
+	 * 'X' is exit (when exit is floor) and 'x' is exit (when exit is wall). The
+	 * method returns the ASCII map in the form of a string, which can be printed to
+	 * the console or saved to disk.
+	 * 
+	 * @return
+	 */
 	public String To_ASCII()
 	{
 		String ascii_map = "";
@@ -308,11 +350,25 @@ public class Level implements Cloneable
 			{
 				if (entrance.x == x && entrance.y == y)
 				{
-					ascii_map += 'e';
+					if (Is_Cell__Wall(entrance))
+					{
+						ascii_map += 'e';
+					}
+					else
+					{
+						ascii_map += 'E';
+					}
 				}
 				else if (exit.x == x && exit.y == y)
 				{
-					ascii_map += 'x';
+					if (Is_Cell__Wall(exit))
+					{
+						ascii_map += 'x';
+					}
+					else
+					{
+						ascii_map += 'X';
+					}
 				}
 				else
 				{
@@ -324,6 +380,252 @@ public class Level implements Cloneable
 		}
 
 		return ascii_map;
+	}
+
+	/**
+	 * Finds and returns the shortest path between a root and a destination cell of
+	 * a map. Both the root and the destination need to be of type "floor",
+	 * otherwise an empty list will be returned.
+	 * 
+	 * @param root
+	 * @param destination
+	 * @return
+	 */
+	public ArrayList<Coords> Shortest_Path__BFS(
+			Coords root,
+			Coords destination)
+	{
+
+		if (root.equals(destination))
+		{
+			ArrayList<Coords> short_path = new ArrayList<Coords>();
+			short_path.add(root);
+			return short_path;
+		}
+		if (Is_Cell__Floor(root) == false)
+		{
+			return new ArrayList<Coords>();
+		}
+		if (Is_Cell__Floor(destination) == false)
+		{
+			return new ArrayList<Coords>();
+		}
+		if (Is_Cell__Within_Bounds(root) == false)
+		{
+			return new ArrayList<Coords>();
+		}
+		if (Is_Cell__Within_Bounds(destination) == false)
+		{
+			return new ArrayList<Coords>();
+		}
+
+		ArrayList<Coords> visited_cells = new ArrayList<Coords>();
+		ArrayList<Coords> search_queue = new ArrayList<Coords>();
+
+		ArrayList<Coords> floor_cells = Cells__Floor__As_List();
+
+		HashMap<Coords, Coords> predecessors = new HashMap<Coords, Coords>();
+
+		for (Coords floor_cell : floor_cells)
+		{
+			predecessors.put(floor_cell, floor_cell);
+		}
+		search_queue.add(root);
+		visited_cells.add(root);
+
+		boolean found_destination = false;
+
+		while (search_queue.size() > 0 && found_destination == false)
+		{
+			/**
+			 * Remove the first element of the search queue. I.e. the one that was first
+			 * inserted to it. And use it as the current cell.
+			 */
+			Coords current = search_queue.remove(0);
+			ArrayList<Coords> neighbors = Cell_Neighbors(current);
+
+			// find the unvisited neighbors...
+			ArrayList<Coords> unvisited_neighbors = new ArrayList<Coords>();
+			for (Coords neighbor : neighbors)
+			{
+				if (visited_cells.contains(neighbor) == false)
+				{
+					unvisited_neighbors.add(neighbor);
+				}
+			}
+
+//			Collections.shuffle(unvisited_neighbors);
+
+			// process all unvisited neighbors
+			for (Coords neighbor : unvisited_neighbors)
+			{
+				search_queue.add(neighbor);
+				visited_cells.add(neighbor);
+				predecessors.put(neighbor, current);
+				if (neighbor.equals(destination))
+				{
+					found_destination = true;
+					break;
+				}
+			}
+		}
+
+		if (found_destination == false)
+		{
+			return new ArrayList<Coords>();
+		}
+		else
+		{
+			ArrayList<Coords> shortestPath = new ArrayList<Coords>();
+
+			boolean pathFinished = false;
+			// start from the destination and gradually move towards the root,
+			// by following the predecessors' dictionary
+			Coords current = destination;
+			shortestPath.add(current);
+			while (pathFinished == false)
+			{
+				Coords predecessor = predecessors.get(current);
+				if (predecessor.equals(current) == false)
+				{
+					shortestPath.add(predecessor);
+					current = predecessor;
+				}
+				else
+				{
+					pathFinished = true;
+				}
+			}
+
+			Collections.reverse(shortestPath);
+
+			if (shortestPath.contains(root)
+					&&
+					shortestPath.contains(destination))
+			{
+				return shortestPath;
+			}
+			else
+			{
+				return new ArrayList<Coords>();
+			}
+
+		}
+	}
+
+	/**
+	 * Returns whether it is possible to get from cell_1 to cell_2. It operates by
+	 * running a BFS search, starting from cell_1 and stopping when cell_2 is
+	 * encountered. If cell_2 is never encountered and there are no more places to
+	 * search, it means that cell_2 is not reachable from cell_2 and the method
+	 * returns false.
+	 * 
+	 * @param cell_1
+	 * @param cell_2
+	 * @return
+	 */
+	public boolean Path_Exists(
+			Coords root,
+			Coords destination)
+	{
+
+		if (Is_Cell__Floor(root) == false)
+		{
+			return false;
+		}
+		if (Is_Cell__Floor(destination) == false)
+		{
+			return false;
+		}
+
+		ArrayList<Coords> visited_cells = new ArrayList<Coords>();
+		ArrayList<Coords> search_queue = new ArrayList<Coords>();
+
+		search_queue.add(root);
+		visited_cells.add(root);
+
+		boolean found_destination = false;
+
+		while (search_queue.size() > 0 && found_destination == false)
+		{
+			/**
+			 * Remove the first element of the search queue. I.e. the one that was first
+			 * inserted to it. And use it as the current cell.
+			 */
+			Coords current = search_queue.remove(0);
+			ArrayList<Coords> neighbors = Cell_Neighbors(current);
+
+			// find the unvisited neighbors...
+			ArrayList<Coords> unvisited_neighbors = new ArrayList<Coords>();
+			for (Coords neighbor : neighbors)
+			{
+				if (visited_cells.contains(neighbor) == false)
+				{
+					unvisited_neighbors.add(neighbor);
+				}
+			}
+
+			for (Coords neighbor : unvisited_neighbors)
+			{
+				if (neighbor.equals(destination))
+				{
+					found_destination = true;
+					break;
+				}
+				search_queue.add(neighbor);
+				visited_cells.add(neighbor);
+			}
+
+		}
+
+		return found_destination;
+
+	}
+
+	/**
+	 * Returns the length of the path from root to destination. If it is impossible
+	 * to get from root to destination, the method returns -1.
+	 * 
+	 * @param level
+	 * @param root
+	 * @param destination
+	 * @return
+	 */
+	public int Path_Length(
+			Coords root,
+			Coords destination)
+	{
+		ArrayList<Coords> shortest_path = Shortest_Path__BFS(
+				root,
+				destination);
+
+		if (shortest_path == null)
+		{
+			return -1;
+		}
+		else if (shortest_path.size() == 0)
+		{
+			return -1;
+		}
+		else
+		{
+			return shortest_path.size();
+		}
+	}
+	
+	/**
+	 * Returns the manhattan distance between two cells.
+	 * 
+	 * @param p1
+	 * @param p2
+	 * @return
+	 */
+	public static int Manhattan_Distance(
+			Coords p1,
+			Coords p2)
+	{
+		int manhattan_distance = Math.abs(p1.x - p2.x) + Math.abs(p1.y - p2.y);
+		return manhattan_distance;
 	}
 
 	/**
@@ -349,7 +651,10 @@ public class Level implements Cloneable
 	}
 
 	/**
-	 * Generates a deep copy of the map. Utilizes the private constructor.
+	 * Generates a deep copy of the level. A deep copy is an exact copy which is,
+	 * however, a separate object in memory. A deep copy is used when, for example,
+	 * we want to copy an individual and mutate it, without affecting its parent.
+	 * Utilizes the private constructor.
 	 */
 	@Override
 	public Object clone()
