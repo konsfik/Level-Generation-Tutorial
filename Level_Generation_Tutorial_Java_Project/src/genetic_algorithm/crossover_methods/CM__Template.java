@@ -4,7 +4,7 @@ import java.util.Random;
 
 import genetic_algorithm.Level_Individual;
 
-public class CM__Custom extends Crossover_Method
+public class CM__Template extends Crossover_Method
 {
 	/**
 	 * Custom, not implemented crossover method.
