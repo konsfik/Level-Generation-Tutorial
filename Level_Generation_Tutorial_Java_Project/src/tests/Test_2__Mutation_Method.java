@@ -46,7 +46,7 @@ public class Test_2__Mutation_Method
 		/**
 		 * Define a mutation method which will be tested
 		 */
-		Mutation_Method mutation_method = new MM__Flip_Random_Cells__Probability(0.1);
+		Mutation_Method mutation_method = new MM__Flip_Random_Cells__Probability(0.05);
 		
 		/**
 		 * Generate an initial individual
