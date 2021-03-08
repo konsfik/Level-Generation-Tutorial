@@ -4,6 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
+/**
+ * Various utilities related to the state representation (Level), such as
+ * distances between cells, shortest path algorithms, etc.
+ * 
+ * @author Konstantinos Sfikas
+ *
+ */
 public class Level_Utilities
 {
 	/**

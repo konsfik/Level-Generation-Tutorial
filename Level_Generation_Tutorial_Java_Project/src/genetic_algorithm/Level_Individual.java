@@ -2,6 +2,14 @@ package genetic_algorithm;
 
 import core.*;
 
+/**
+ * Class that represents an individual of the Genetic Algorithm. The class
+ * includes the representation of a level and also stores the fitness of that
+ * level.
+ * 
+ * @author Konstantinos Sfikas
+ *
+ */
 public class Level_Individual implements Cloneable, Comparable<Level_Individual>
 {
 	public Level level_state;

@@ -2,6 +2,12 @@ package core;
 
 import java.util.ArrayList;
 
+/**
+ * State representation of a Level.
+ * 
+ * @author Konstantinos Sfikas
+ *
+ */
 public class Level implements Cloneable
 {
 	// the level's grid - cells are represented as a 2D array of characters, where

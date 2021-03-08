@@ -1,5 +1,12 @@
 package core;
 
+/**
+ * Represents a pair of coordinates in 2D - space. The values are integers, as
+ * it will be used to signify a cell of a 2d - table.
+ * 
+ * @author Konstantinos Sfikas
+ *
+ */
 public class Coords implements Cloneable
 {
 	public int x;
@@ -45,8 +52,8 @@ public class Coords implements Cloneable
 		}
 
 		/*
-		 * Check if o is an instance of Vector_2i or not.
-		 * "null instanceof [type]" also returns false
+		 * Check if o is an instance of Vector_2i or not. "null instanceof [type]" also
+		 * returns false
 		 */
 		if (other instanceof Coords == false)
 		{
@@ -57,20 +64,20 @@ public class Coords implements Cloneable
 		Coords other_vector = (Coords) other;
 
 		// Compare the data members and return accordingly
-		return 
-				this.x == other_vector.x 
-				&& 
+		return this.x == other_vector.x
+				&&
 				this.y == other_vector.y;
 	}
-	
-	//Idea from effective Java : Item 9
-    @Override
-    public int hashCode() {
-        int result = 17;
-        result = 31 * result + x;
-        result = 31 * result + y;
-        return result;
-    }
+
+	// Idea from effective Java : Item 9
+	@Override
+	public int hashCode()
+	{
+		int result = 17;
+		result = 31 * result + x;
+		result = 31 * result + y;
+		return result;
+	}
 
 	/**
 	 * Private constructor, to be used by the clone() method.

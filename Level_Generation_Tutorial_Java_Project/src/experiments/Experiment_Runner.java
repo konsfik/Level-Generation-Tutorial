@@ -13,22 +13,23 @@ import genetic_algorithm.mutation_methods.*;
 import genetic_algorithm.evaluation_methods.*;
 import io_utilities.IO_Utilities;
 
+/**
+ * Main method that sets up and runs an experiment. One needs to define the
+ * following modules: 1) Level Generation Method 2) Parent Selection Method 3)
+ * Crossover Method 4) Mutation Method 5) Evaluation Method The rest of the GA
+ * settings: - population size - elitism size - number of generations Plus some
+ * more experiment settings: - number of experiment repetitions - save images
+ * (boolean) - save ascii maps (boolean) - save rate (for images and ascii maps)
+ * 
+ * Once all of these settings have been defined, the algorithm will run an
+ * experiment and save the relevant data on disk.
+ * 
+ * @author Konstantinos Sfikas
+ *
+ */
 public class Experiment_Runner
 {
-	/**
-	 * Main method that sets up and runs an experiment. One needs to define the
-	 * following modules: 1) Level Generation Method 2) Parent Selection Method 3)
-	 * Crossover Method 4) Mutation Method 5) Evaluation Method The rest of the GA
-	 * settings: - population size - elitism size - number of generations Plus some
-	 * more experiment settings: - number of experiment repetitions - save images
-	 * (boolean) - save ascii maps (boolean) - save rate (for images and ascii maps)
-	 * 
-	 * Once all of these settings have been defined, the algorithm will run an
-	 * experiment and save the relevant data on disk.
-	 * 
-	 * @param args
-	 * @throws IOException
-	 */
+
 	public static void main(String[] args) throws IOException
 	{
 		Random rand = new Random();
@@ -70,24 +71,18 @@ public class Experiment_Runner
 
 		Evaluation_Method evaluation_method = new EM__Maximize_Solution_Path();
 
-		/*
-		 * Define the rest of the genetic algorithm's settings:
-		 */
+		// Define the rest of the genetic algorithm's settings:
 		int population_size = 20;
 		int elitism_size = 2;
 		int number_of_generations = 500;
 
-		/**
-		 * Define the rest of the experiment's settings:
-		 */
+		// Define the rest of the experiment's settings:
 		int experiment_repetitions = 10;
 		boolean save_images = true;
 		boolean save_ascii_maps = true;
 		int save_rate = 50;
 
-		/*
-		 * Put the parts together, defining a fully functional genetic algorithm:
-		 */
+		// Put the parts together, defining a fully functional genetic algorithm:
 		Genetic_Algorithm genetic_algorithm = new Genetic_Algorithm(
 				level_generation_method,
 				parent_selection_method,
@@ -96,10 +91,8 @@ public class Experiment_Runner
 				evaluation_method,
 				population_size,
 				elitism_size);
-		
-		/**
-		 * Actually run the experiment
-		 */
+
+		// Actually run the experiment
 		Run_Experiment(
 				rand,
 				genetic_algorithm,
@@ -110,9 +103,10 @@ public class Experiment_Runner
 				save_rate);
 
 	}
-	
+
 	/**
 	 * Runs the experiment.
+	 * 
 	 * @param rand
 	 * @param genetic_algorithm
 	 * @param number_of_generations

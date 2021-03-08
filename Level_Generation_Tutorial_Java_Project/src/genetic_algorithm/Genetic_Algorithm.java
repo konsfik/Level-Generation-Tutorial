@@ -12,15 +12,25 @@ import genetic_algorithm.level_generation_methods.Level_Generation_Method;
 import genetic_algorithm.mutation_methods.Mutation_Method;
 import genetic_algorithm.parent_selection_methods.Parent_Selection_Method;
 
+/**
+ * Class that represents all the parts, settings and operation of a typical
+ * Genetic Algorithm. The class is implemented in a modular manner, thus the
+ * user must define their preferred level generation method, parent selection
+ * method, crossover method, mutation method, evaluation method, etc.
+ * 
+ * 
+ * @author Konstantinos Sfikas
+ *
+ */
 public class Genetic_Algorithm
 {
 	Level_Generation_Method level_generation_method;
-	
+
 	Parent_Selection_Method parent_selection_method;
 	Crossover_Method crossover_method;
 	Mutation_Method mutation_method;
 	Evaluation_Method evaluation_method;
-	
+
 	int elitism_size;
 	int population_size;
 
@@ -49,7 +59,10 @@ public class Genetic_Algorithm
 	}
 
 	/**
-	 * Generates, evaluates and sorts the initial population.
+	 * Generates, evaluates and sorts the initial population. Make sure to run this
+	 * method, before actually running the algorithm! This method can also be used
+	 * for resetting the algorithm (deleting the current population and generating a
+	 * new one).
 	 * 
 	 * @param rand
 	 */
@@ -74,7 +87,7 @@ public class Genetic_Algorithm
 		Evaluate_Population();
 
 		// properly sort the population
-		Sort_Population();
+		Sort_Population(rand);
 	}
 
 	public void Run(
@@ -138,19 +151,30 @@ public class Genetic_Algorithm
 
 		// 7. evaluate and sort the population...
 		Evaluate_Population();
-		Sort_Population();
+		Sort_Population(rand);
 	}
 
-	private void Sort_Population()
+	/**
+	 * Sets the population in order, from higher to lower fitness. This is important
+	 * for properly selecting the best individuals, when elitism is used.
+	 */
+	private void Sort_Population(Random rand)
 	{
+		// shuffle before sorting, to randomize the order of individuals with common fitness
+		Collections.shuffle(population, rand);
+		
 		// call the sort method, to arrange the population from smaller to higher
 		// fitness
 		Collections.sort(population);
-		
+
 		// reverse the list, so that we have the best individuals first
 		Collections.reverse(population);
 	}
 
+	/**
+	 * Evaluates the individuals of the current population, one by one, and stores
+	 * their fitness inside their "fitness" field.
+	 */
 	private void Evaluate_Population()
 	{
 		for (int i = 0; i < population_size; i++)
@@ -168,11 +192,24 @@ public class Genetic_Algorithm
 		}
 	}
 
+	/**
+	 * Returns the fitness of the best individual of the current population. Assumes
+	 * that the population is already sorted, which occurs automatically at the end
+	 * of each generation.
+	 * 
+	 * @return
+	 */
 	public double Best_Individual_Fitness()
 	{
 		return population.get(0).fitness;
 	}
 
+	/**
+	 * Returns the best individual of the current population (i.e. the one with the
+	 * highest fitness).
+	 * 
+	 * @return
+	 */
 	public Level_Individual Best_Individual()
 	{
 		return (Level_Individual) population.get(0).clone();
