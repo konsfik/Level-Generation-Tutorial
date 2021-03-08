@@ -46,6 +46,26 @@ public class Level implements Cloneable
 	}
 
 	/**
+	 * Returns the width of the level
+	 * 
+	 * @return
+	 */
+	public int Width()
+	{
+		return cells.length;
+	}
+
+	/**
+	 * Returns the height of the level
+	 * 
+	 * @return
+	 */
+	public int Height()
+	{
+		return cells[0].length;
+	}
+
+	/**
 	 * Sets a specific cell as wall (based on coordinates)
 	 * 
 	 * @param coords
@@ -84,26 +104,6 @@ public class Level implements Cloneable
 	public void Set_Floor(int x, int y)
 	{
 		cells[x][y] = 'f';
-	}
-
-	/**
-	 * Returns the width of the level
-	 * 
-	 * @return
-	 */
-	public int Width()
-	{
-		return cells.length;
-	}
-
-	/**
-	 * Returns the height of the level
-	 * 
-	 * @return
-	 */
-	public int Height()
-	{
-		return cells[0].length;
 	}
 
 	/**
@@ -612,7 +612,7 @@ public class Level implements Cloneable
 			return shortest_path.size();
 		}
 	}
-	
+
 	/**
 	 * Returns the manhattan distance between two cells.
 	 * 
