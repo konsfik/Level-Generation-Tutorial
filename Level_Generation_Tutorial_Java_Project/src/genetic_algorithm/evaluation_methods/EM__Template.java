@@ -2,7 +2,7 @@ package genetic_algorithm.evaluation_methods;
 
 import genetic_algorithm.Level_Individual;
 
-public class EM__Custom extends Evaluation_Method
+public class EM__Template extends Evaluation_Method
 {
 
 	@Override
