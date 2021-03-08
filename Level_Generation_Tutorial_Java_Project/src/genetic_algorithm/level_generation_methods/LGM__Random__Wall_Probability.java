@@ -2,8 +2,8 @@ package genetic_algorithm.level_generation_methods;
 
 import java.util.Random;
 
-import Core.Coords;
-import Core.Level;
+import core.Coords;
+import core.Level;
 
 public class LGM__Random__Wall_Probability extends Level_Generation_Method
 {

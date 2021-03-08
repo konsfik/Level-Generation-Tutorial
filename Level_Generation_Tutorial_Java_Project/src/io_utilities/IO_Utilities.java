@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 
 import javax.imageio.ImageIO;
 
-import Core.Level;
+import core.Level;
 import genetic_algorithm.Level_Individual;
 
 public class IO_Utilities

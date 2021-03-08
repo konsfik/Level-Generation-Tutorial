@@ -3,8 +3,8 @@ package tests;
 import java.io.IOException;
 import java.util.Random;
 
-import Core.Coords;
-import Core.Level;
+import core.Coords;
+import core.Level;
 import genetic_algorithm.Level_Individual;
 import genetic_algorithm.level_generation_methods.LGM__Random__Wall_Probability;
 import genetic_algorithm.level_generation_methods.Level_Generation_Method;

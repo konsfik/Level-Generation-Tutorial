@@ -1,7 +1,8 @@
 package genetic_algorithm.level_generation_methods;
 
 import java.util.Random;
-import Core.*;
+
+import core.*;
 
 public abstract class Level_Generation_Method
 {

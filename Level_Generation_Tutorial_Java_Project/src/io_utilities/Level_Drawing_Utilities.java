@@ -5,9 +5,9 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import Core.Coords;
-import Core.Level;
-import Core.Level_Utilities;
+import core.Coords;
+import core.Level;
+import core.Level_Utilities;
 
 public class Level_Drawing_Utilities
 {

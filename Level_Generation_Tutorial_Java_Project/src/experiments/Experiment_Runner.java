@@ -1,10 +1,10 @@
-package Experiments;
+package experiments;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
 
-import Core.*;
+import core.*;
 import genetic_algorithm.*;
 import genetic_algorithm.level_generation_methods.*;
 import genetic_algorithm.parent_selection_methods.*;

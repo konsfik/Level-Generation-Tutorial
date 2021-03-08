@@ -1,6 +1,6 @@
 package genetic_algorithm.evaluation_methods;
 
-import Core.Level_Utilities;
+import core.Level_Utilities;
 import genetic_algorithm.Level_Individual;
 
 public class EM__Maximize_Solution_Path extends Evaluation_Method

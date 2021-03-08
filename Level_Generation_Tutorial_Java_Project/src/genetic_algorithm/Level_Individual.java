@@ -1,6 +1,6 @@
 package genetic_algorithm;
 
-import Core.*;
+import core.*;
 
 public class Level_Individual implements Cloneable, Comparable<Level_Individual>
 {

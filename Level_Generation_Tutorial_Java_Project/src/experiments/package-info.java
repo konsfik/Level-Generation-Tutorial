@@ -5,4 +5,4 @@
  * @author kostas
  *
  */
-package Experiments;
+package experiments;
