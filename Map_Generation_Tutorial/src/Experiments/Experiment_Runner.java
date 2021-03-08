@@ -28,6 +28,7 @@ import genetic_algorithm.level_generation_methods.Level_Generation_Method;
 import genetic_algorithm.mutation_methods.MM__Flip_Random_Cells__Probability;
 import genetic_algorithm.mutation_methods.Mutation_Method;
 import genetic_algorithm.parent_selection_methods.PSM__Roulette_Wheel_Selection;
+import genetic_algorithm.parent_selection_methods.PSM__Tournament;
 import genetic_algorithm.parent_selection_methods.Parent_Selection_Method;
 import io_utilities.IO_Utilities;
 
@@ -52,7 +53,9 @@ public class Experiment_Runner
 		 * Parent selection method: This method is responsible for selecting the
 		 * parent(s) which will give birth to the offspring for the next genertion.
 		 */
-		Parent_Selection_Method parent_selection_method = new PSM__Roulette_Wheel_Selection();
+//		Parent_Selection_Method parent_selection_method = new PSM__Roulette_Wheel_Selection();
+		int tournament_size = 3;
+		Parent_Selection_Method parent_selection_method = new PSM__Tournament(tournament_size);
 
 		/**
 		 * Crossover method: This method is responsible for combining a pair of
@@ -77,15 +80,15 @@ public class Experiment_Runner
 		 */
 		int population_size = 20;
 		int elitism_size = 2;
-		int number_of_generations = 1000;
+		int number_of_generations = 500;
 
 		/**
 		 * Define the rest of the experiment's settings:
 		 */
 		int experiment_repetitions = 10;
 		boolean save_images = true;
-		boolean save_ascii_maps = false;
-		int save_rate = 100;
+		boolean save_ascii_maps = true;
+		int save_rate = 50;
 
 		/*
 		 * Put the parts together, defining a fully functional genetic algorithm:

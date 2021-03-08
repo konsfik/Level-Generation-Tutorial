@@ -39,7 +39,7 @@ public class IO_Utilities
 		ascii_writer.close();
 	}
 	
-	public static void Save_Level_As_Image(
+	public static void Save__Level__As__Image(
 			Level level,
 			String path) throws IOException
 	{
