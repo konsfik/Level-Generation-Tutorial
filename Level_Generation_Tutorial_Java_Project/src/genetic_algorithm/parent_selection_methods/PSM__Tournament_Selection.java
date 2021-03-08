@@ -6,11 +6,11 @@ import java.util.Random;
 
 import genetic_algorithm.Level_Individual;
 
-public class PSM__Tournament extends Parent_Selection_Method
+public class PSM__Tournament_Selection extends Parent_Selection_Method
 {
 	public int tournament_size;
 
-	public PSM__Tournament(int tournament_size)
+	public PSM__Tournament_Selection(int tournament_size)
 	{
 		this.tournament_size = tournament_size;
 	}

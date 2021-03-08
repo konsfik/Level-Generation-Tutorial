@@ -49,7 +49,7 @@ public class Experiment_Runner
 		 * parent(s) which will give birth to the offspring for the next genertion.
 		 */
 		int tournament_size = 3;
-		Parent_Selection_Method parent_selection_method = new PSM__Tournament(tournament_size);
+		Parent_Selection_Method parent_selection_method = new PSM__Tournament_Selection(tournament_size);
 
 		/**
 		 * 3) Crossover method: This method is responsible for combining a pair of
