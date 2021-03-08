@@ -1,75 +1,70 @@
 package Experiments;
 
-import java.awt.image.*;
-
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Random;
 
-import javax.imageio.ImageIO;
-
 import Core.*;
-import genetic_algorithm.Genetic_Algorithm;
-import genetic_algorithm.Level_Individual;
-import genetic_algorithm.crossover_methods.CM__Random_Uniform;
-import genetic_algorithm.crossover_methods.Crossover_Method;
-import genetic_algorithm.evaluation_methods.EM__Average;
-import genetic_algorithm.evaluation_methods.EM__Maximize_Solution_Path;
-import genetic_algorithm.evaluation_methods.EM__Maximize_Walls;
-import genetic_algorithm.evaluation_methods.EM__Minimize_Walls;
-import genetic_algorithm.evaluation_methods.Evaluation_Method;
-import genetic_algorithm.level_generation_methods.LGM__Random__Wall_Probability;
-import genetic_algorithm.level_generation_methods.Level_Generation_Method;
-import genetic_algorithm.mutation_methods.MM__Flip_Random_Cells__Probability;
-import genetic_algorithm.mutation_methods.Mutation_Method;
-import genetic_algorithm.parent_selection_methods.PSM__Roulette_Wheel_Selection;
-import genetic_algorithm.parent_selection_methods.PSM__Tournament;
-import genetic_algorithm.parent_selection_methods.Parent_Selection_Method;
+import genetic_algorithm.*;
+import genetic_algorithm.level_generation_methods.*;
+import genetic_algorithm.parent_selection_methods.*;
+import genetic_algorithm.crossover_methods.*;
+import genetic_algorithm.mutation_methods.*;
+import genetic_algorithm.evaluation_methods.*;
 import io_utilities.IO_Utilities;
 
 public class Experiment_Runner
 {
+	/**
+	 * Main method that sets up and runs an experiment. One needs to define the
+	 * following modules: 1) Level Generation Method 2) Parent Selection Method 3)
+	 * Crossover Method 4) Mutation Method 5) Evaluation Method The rest of the GA
+	 * settings: - population size - elitism size - number of generations Plus some
+	 * more experiment settings: - number of experiment repetitions - save images
+	 * (boolean) - save ascii maps (boolean) - save rate (for images and ascii maps)
+	 * 
+	 * Once all of these settings have been defined, the algorithm will run an
+	 * experiment and save the relevant data on disk.
+	 * 
+	 * @param args
+	 * @throws IOException
+	 */
 	public static void main(String[] args) throws IOException
 	{
 		Random rand = new Random();
 
 		/**
-		 * Level Generation Method: This method is responsible for generating the
+		 * 1) Level Generation Method: This method is responsible for generating the
 		 * initial population.
 		 */
 		Level_Generation_Method level_generation_method = new LGM__Random__Wall_Probability(
-				21,
-				21,
+				51,
+				51,
 				new Coords(0, 10),
-				new Coords(20, 10),
+				new Coords(50, 10),
 				0.2);
 
 		/*
-		 * Parent selection method: This method is responsible for selecting the
+		 * 2) Parent selection method: This method is responsible for selecting the
 		 * parent(s) which will give birth to the offspring for the next genertion.
 		 */
-//		Parent_Selection_Method parent_selection_method = new PSM__Roulette_Wheel_Selection();
 		int tournament_size = 3;
 		Parent_Selection_Method parent_selection_method = new PSM__Tournament(tournament_size);
 
 		/**
-		 * Crossover method: This method is responsible for combining a pair of
+		 * 3) Crossover method: This method is responsible for combining a pair of
 		 * individuals and producing an offspring.
 		 */
 		Crossover_Method crossover_method = new CM__Random_Uniform();
 
 		/**
-		 * Mutation method: This method will be responsible for mutating an offspring.
+		 * 4) Mutation method: This method will be responsible for mutating an
+		 * offspring.
 		 */
 		Mutation_Method mutation_method = new MM__Flip_Random_Cells__Probability(0.02);
 
 		/*
-		 * Evaluation Method: This method will be responsible for calculating the
+		 * 5) Evaluation Method: This method will be responsible for calculating the
 		 * fitness of each individual.
 		 */
 
@@ -93,7 +88,7 @@ public class Experiment_Runner
 		/*
 		 * Put the parts together, defining a fully functional genetic algorithm:
 		 */
-		Genetic_Algorithm ga = new Genetic_Algorithm(
+		Genetic_Algorithm genetic_algorithm = new Genetic_Algorithm(
 				level_generation_method,
 				parent_selection_method,
 				crossover_method,
@@ -101,10 +96,13 @@ public class Experiment_Runner
 				evaluation_method,
 				population_size,
 				elitism_size);
-
+		
+		/**
+		 * Actually run the experiment
+		 */
 		Run_Experiment(
 				rand,
-				ga,
+				genetic_algorithm,
 				number_of_generations,
 				experiment_repetitions,
 				save_images,
@@ -112,10 +110,21 @@ public class Experiment_Runner
 				save_rate);
 
 	}
-
+	
+	/**
+	 * Runs the experiment.
+	 * @param rand
+	 * @param genetic_algorithm
+	 * @param number_of_generations
+	 * @param experiment_repetitions
+	 * @param save_images
+	 * @param save_ascii_maps
+	 * @param save_rate
+	 * @throws IOException
+	 */
 	public static void Run_Experiment(
 			Random rand,
-			Genetic_Algorithm ga,
+			Genetic_Algorithm genetic_algorithm,
 			int number_of_generations,
 			int experiment_repetitions,
 			boolean save_images,
@@ -138,12 +147,12 @@ public class Experiment_Runner
 
 			data_log__writer.append("generation,best_fitness\n");
 
-			ga.Initialize_Population(rand);
+			genetic_algorithm.Initialize_Population(rand);
 
 			if (save_images)
 			{
 				// save the best individual of the initial population as an image
-				Level_Individual best_individual = ga.Best_Individual();
+				Level_Individual best_individual = genetic_algorithm.Best_Individual();
 				String image_path = current_repetition__folder_path
 						+ "\\generation_"
 						+ Integer.toString(0)
@@ -154,7 +163,7 @@ public class Experiment_Runner
 			if (save_ascii_maps)
 			{
 				// save the best individual of the initial population as an ascii map
-				Level_Individual best_individual = ga.Best_Individual();
+				Level_Individual best_individual = genetic_algorithm.Best_Individual();
 				String ascii_map = best_individual.level_state.To_ASCII();
 
 				String ascii_map_save_path = current_repetition__folder_path
@@ -170,10 +179,10 @@ public class Experiment_Runner
 			for (int generation = 1; generation <= number_of_generations; generation++)
 			{
 				// advance the ga by one step
-				ga.Run_One_Step(rand);
+				genetic_algorithm.Run_One_Step(rand);
 
 				// console log
-				double best_fitness = ga.Best_Individual_Fitness();
+				double best_fitness = genetic_algorithm.Best_Individual_Fitness();
 				System.out.println(
 						"generation: " + Integer.toString(generation) +
 								" | " +
@@ -191,7 +200,7 @@ public class Experiment_Runner
 				{
 					if (save_images)
 					{
-						Level_Individual best_individual = ga.Best_Individual();
+						Level_Individual best_individual = genetic_algorithm.Best_Individual();
 						String image_path = current_repetition__folder_path
 								+ "\\generation_"
 								+ Integer.toString(generation)
@@ -201,7 +210,7 @@ public class Experiment_Runner
 
 					if (save_ascii_maps)
 					{
-						Level_Individual best_individual = ga.Best_Individual();
+						Level_Individual best_individual = genetic_algorithm.Best_Individual();
 						String ascii_map_save_path = current_repetition__folder_path
 								+ "\\generation_"
 								+ Integer.toString(generation)
@@ -213,7 +222,5 @@ public class Experiment_Runner
 			data_log__writer.close();
 		}
 	}
-
-	
 
 }

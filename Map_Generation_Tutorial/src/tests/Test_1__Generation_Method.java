@@ -9,7 +9,7 @@ import genetic_algorithm.level_generation_methods.LGM__Random__Wall_Probability;
 import genetic_algorithm.level_generation_methods.Level_Generation_Method;
 import io_utilities.IO_Utilities;
 
-public class Test_1__Generate_Many
+public class Test_1__Generation_Method
 {
 	public static void main(String[] args) throws IOException
 	{
@@ -32,7 +32,7 @@ public class Test_1__Generate_Many
 				0.2);
 
 		// create an output folder
-		String general_output__folder_path = "Experiments_Output\\Test_1__Generate_Many__"
+		String general_output__folder_path = "Experiments_Output\\Test_1__Generation_Method__"
 				+ Long.toString(System.currentTimeMillis());
 		IO_Utilities.Create_Folder(general_output__folder_path);
 

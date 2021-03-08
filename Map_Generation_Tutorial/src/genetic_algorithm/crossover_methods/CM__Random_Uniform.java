@@ -22,6 +22,7 @@ public class CM__Random_Uniform extends Crossover_Method
 			Level_Individual parent_1,
 			Level_Individual parent_2)
 	{
+		// initialize the offspring as a clone of parent 1
 		Level_Individual offspring = (Level_Individual) parent_1.clone();
 
 		int w = parent_1.level_state.Width();
@@ -32,17 +33,15 @@ public class CM__Random_Uniform extends Crossover_Method
 			for (int y = 0; y < h; y++)
 			{
 				double dice_roll = rand.nextDouble();
+				// if the dice roll is smaller than 0.5 then 
 				if (dice_roll < 0.5)
-				{
-					offspring.level_state.cells[x][y] = parent_1.level_state.cells[x][y];
-				}
-				else
 				{
 					offspring.level_state.cells[x][y] = parent_2.level_state.cells[x][y];
 				}
 			}
 		}
-
+		
+		// set the offspring fitness to 0, it will be actually evaluated later on.
 		offspring.fitness = 0.0;
 		
 		return offspring;
