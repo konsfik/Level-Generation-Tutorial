@@ -30,7 +30,8 @@ public class PSM__Roulette_Wheel_Selection extends Parent_Selection_Method
 		
 		// select a parent individual, using the roulette wheel selection method
 		
-		// create a deep copy of the selected individual, using the individual.clone() method
+		// create a deep copy of the selected individual, 
+		// using the (Level_Individual)individual.clone() method
 		
 		// return that clone so that it can be used by the GA
 		return null;

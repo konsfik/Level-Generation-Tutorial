@@ -17,10 +17,13 @@ public class CM__Template extends Crossover_Method
 	{
 		/**
 		 * TODO: Use this class to define your own crossover method. The method should
-		 * generate an offspring by combining the two parents (somehow) and return it.
-		 * For example, the parents may be vertically split in half, and the offspring
-		 * can be made up of merging the left part of parent 1 and the right part of
-		 * parent 2. You can take a look at how CM__Random_Uniform works, as an example.
+		 * generate an offspring by combining the two parents and return it. You can
+		 * take a look at how CM__Random_Uniform works, as an example.
+		 */
+
+		/**
+		 * Proposed task: Split the two parents in half and compose the offspring by
+		 * merging the left part of parent 1 with the right part of parent 2.
 		 */
 		return null;
 	}

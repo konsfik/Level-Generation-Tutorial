@@ -26,10 +26,21 @@ public class LGM__Template extends Level_Generation_Method
 	public Level Generate_Level(Random rand)
 	{
 		/**
-		 * TODO: Use this class to define your own level generation method. For example,
-		 * you may set the initial state of the level to be completely covered by walls
-		 * and then apply a digger agent that digs corridors and rooms in that level.
-		 * Make sure to check out the already implemented variations.
+		 * TODO: Use this class to define your own level generation method. Make sure to
+		 * check out the already implemented variations for reference.
+		 */
+
+		/**
+		 * Proposed task 1: Start by setting all of the level's cells to walls and then
+		 * aooly a simple digging agent that moves around and creates corridors and
+		 * rooms.
+		 */
+
+		/**
+		 * Proposed task 2: Start with an empty level (only floor) and assign random
+		 * rectangle areas as either walls or floors. This method may result to levels
+		 * that have more regions and are not as "noisy" as the cel - by - cell random
+		 * method.
 		 */
 		return null;
 	}
