@@ -276,11 +276,13 @@ public class Level implements Cloneable
 		// In that case, return an empty list.
 		if (Is_Cell__Wall(cell))
 		{
+			// return an empty list
 			return cell_neighbors;
 		}
 
 		if (Is_Cell__Within_Bounds(cell) == false)
 		{
+			// return an empty list
 			return cell_neighbors;
 		}
 
@@ -620,7 +622,7 @@ public class Level implements Cloneable
 	 * @param p2
 	 * @return
 	 */
-	public static int Manhattan_Distance(
+	public int Manhattan_Distance(
 			Coords p1,
 			Coords p2)
 	{
@@ -652,9 +654,9 @@ public class Level implements Cloneable
 
 	/**
 	 * Generates a deep copy of the level. A deep copy is an exact copy which is,
-	 * however, a separate object in memory. A deep copy is used when, for example,
-	 * we want to copy an individual and mutate it, without affecting its parent.
-	 * Utilizes the private constructor.
+	 * however, a separate object in memory. It is used when, for example, we want
+	 * to copy an individual and mutate it, without affecting its parent. Utilizes
+	 * the private constructor.
 	 */
 	@Override
 	public Object clone()
